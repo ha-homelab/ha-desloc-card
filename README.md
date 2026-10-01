@@ -94,10 +94,11 @@ sensor and RSSI sensor in dBm. Omit sensors that do not exist.
 Reported bolt state is not a door-open sensor and may be cached by the cloud.
 After an uncertain result, check the physical lock before issuing another command.
 
+Cancelling the confirmation closes the prompt without sending a command.
+
 ```mermaid
 flowchart TD
-    tap["Tap Unlock<br/>on the card"] --> confirm{"Confirm unlock?"}
-    confirm -- Cancel --> stop["No command"]
+    tap["Tap Unlock<br/>on the card"] --> confirm{"Confirm<br/>unlock?"}
     confirm -- Confirm --> ha["Home Assistant<br/>lock.unlock for<br/>the selected entity"]
     ha --> integration["Lock integration<br/>executes once"]
     integration --> result["Card shows reported<br/>state or error"]
