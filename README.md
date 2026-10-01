@@ -21,6 +21,11 @@ the cloud-reported bolt state, which may be cached; it is not a door-open sensor
 See the [screenshot gallery](docs/screenshots.md) for the visual editor and an
 earlier unlocked-state capture.
 
+[Watch the 30-second overview](docs/media/desloc-overview.mp4) of the companion
+integration and card, or read its [scene synopsis](docs/screenshots.md#video-overview).
+The silent English walkthrough uses captured UI screenshots; it is not a
+continuous recording or proof of physical lock actuation.
+
 ## Install through HACS
 
 **Not yet published in the default HACS catalog.** Add the repository manually;
