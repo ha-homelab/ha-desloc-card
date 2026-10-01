@@ -18,6 +18,11 @@ Assistant 2026.9.1, DESLOC integration 0.3.0, and DESLOC Lock Card 0.1.1. It is 
 edited sequence of screenshots, not a continuous recording or evidence of
 physical lock actuation.
 
+The captions were updated after the
+[D110 Plus community report](https://github.com/home-assistant/feature-requests/discussions/2138#discussioncomment-18702050).
+The UI screenshots still show the maintainer's C100 Plus, using the capture
+versions listed above; they do not depict a D110 Plus test.
+
 The README uses a [looping GIF](media/desloc-overview.gif) of the same 30-second
 screenshot sequence. The MP4, text synopsis below, and static screenshots remain
 available as alternatives to the animation.
@@ -27,16 +32,22 @@ The six scenes, in order:
 1. **Set up DESLOC:** choose email sign-in or an existing app session. A new
    sign-in can invalidate the phone app session.
 2. **Discover locks:** all returned locks are added during setup or
-   reconfiguration. C100 Plus is tested; other models are experimental.
+   reconfiguration. C100 Plus: maintainer-tested. D110 Plus: community-reported
+   working. Other models remain experimental.
 3. **View reported state:** the card shows bolt state, battery, and Wi-Fi.
    Cloud reports may be cached and are not a door-open sensor.
 4. **Configure the card:** select a lock, display name, and optional sensors.
    The card uses HA entities and never receives DESLOC credentials.
 5. **Add a permanent PIN user:** open Settings → Devices & services → DESLOC →
    Configure. The displayed form is empty; submitting it creates permanent access.
-6. **Find the projects:** the unofficial cloud integration and optional card
-   are separate repositories. C100 Plus is physically tested; other models remain
-   experimental.
+   Permanent PIN creation was physically tested on C100 Plus. D110 Plus PIN
+   testing has not been reported.
+6. **Find the projects:** C100 Plus is maintainer-tested; D110 Plus is
+   community-reported working. Other models remain experimental. The unofficial
+   [cloud integration](https://github.com/ha-homelab/ha-desloc) and optional
+   [dashboard card](https://github.com/ha-homelab/ha-desloc-card) are separate
+   repositories. Install them through HACS custom repositories while their
+   catalog submissions await review.
 
 ## Reported locked state
 
