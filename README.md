@@ -8,8 +8,11 @@ a visual editor, light/dark theme support, and a required unlock confirmation.
 The card is independent of DESLOC, Home Assistant, and HACS.
 
 The companion integration automatically discovers all locks returned by the
-DESLOC account. C100 Plus is physically tested; other models are admitted with
-experimental, unverified compatibility.
+DESLOC account. C100 Plus is maintainer-tested. D110 Plus has a
+[community report of working](https://github.com/home-assistant/feature-requests/discussions/2138#discussioncomment-18702050)
+from October 1, 2026; the report does not specify individual features or firmware
+versions. Other models remain experimental. See the integration's
+[compatibility notes](https://github.com/ha-homelab/ha-desloc/blob/main/docs/compatibility.md).
 The card uses Home Assistant entities and actions; it never receives DESLOC
 credentials or connects directly to the vendor cloud. It can also display other
 standard HA lock entities, but their behavior depends on the underlying integration.
