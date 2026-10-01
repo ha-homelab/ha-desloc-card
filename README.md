@@ -7,7 +7,9 @@ Shows reported lock state, battery, and Wi-Fi signal, with lock/unlock controls,
 a visual editor, light/dark theme support, and a required unlock confirmation.
 The card is independent of DESLOC, Home Assistant, and HACS.
 
-The companion integration is experimental and currently supports C100 Plus only.
+The companion integration automatically discovers all locks returned by the
+DESLOC account. C100 Plus is physically tested; other models are admitted with
+experimental, unverified compatibility.
 The card uses Home Assistant entities and actions; it never receives DESLOC
 credentials or connects directly to the vendor cloud. It can also display other
 standard HA lock entities, but their behavior depends on the underlying integration.
@@ -17,7 +19,8 @@ standard HA lock entities, but their behavior depends on the underlying integrat
 ## Install through HACS
 
 **Not yet published in the default HACS catalog.** Add the repository manually;
-submission for review does not mean it has been accepted. The card and integration
+the [catalog submission](https://github.com/hacs/default/pull/11473) is pending
+review and has not been accepted. The card and integration
 are separate repositories: install the [DESLOC integration](https://github.com/ha-homelab/ha-desloc#installation)
 first if you do not already have a lock entity.
 
