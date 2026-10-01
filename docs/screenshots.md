@@ -18,6 +18,10 @@ Assistant 2026.9.1, DESLOC integration 0.3.0, and DESLOC Lock Card 0.1.1. It is 
 edited sequence of screenshots, not a continuous recording or evidence of
 physical lock actuation.
 
+The README uses a [looping GIF](media/desloc-overview.gif) of the same 30-second
+screenshot sequence. The MP4, text synopsis below, and static screenshots remain
+available as alternatives to the animation.
+
 The six scenes, in order:
 
 1. **Set up DESLOC:** choose email sign-in or an existing app session. A new
