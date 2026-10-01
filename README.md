@@ -14,7 +14,12 @@ The card uses Home Assistant entities and actions; it never receives DESLOC
 credentials or connects directly to the vendor cloud. It can also display other
 standard HA lock entities, but their behavior depends on the underlying integration.
 
-![DESLOC Lock Card in Home Assistant, showing reported state, battery, Wi-Fi, and controls](docs/images/lock-card.jpg)
+![DESLOC Lock Card showing a reported Locked state, battery, Wi-Fi signal, and controls](docs/images/lock-card-locked.jpg)
+
+Cropped actual UI from Home Assistant 2026.9.1 with card 0.1.1. This capture shows
+the cloud-reported bolt state, which may be cached; it is not a door-open sensor.
+See the [screenshot gallery](docs/screenshots.md) for the visual editor and an
+earlier unlocked-state capture.
 
 ## Install through HACS
 
