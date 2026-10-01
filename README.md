@@ -14,7 +14,17 @@ The card uses Home Assistant entities and actions; it never receives DESLOC
 credentials or connects directly to the vendor cloud. It can also display other
 standard HA lock entities, but their behavior depends on the underlying integration.
 
-![DESLOC Lock Card in Home Assistant, showing reported state, battery, Wi-Fi, and controls](docs/images/lock-card.jpg)
+![DESLOC Lock Card showing a reported Locked state, battery, Wi-Fi signal, and controls](docs/images/lock-card-locked.jpg)
+
+Cropped actual UI from Home Assistant 2026.9.1 with card 0.1.1. This capture shows
+the cloud-reported bolt state, which may be cached; it is not a door-open sensor.
+See the [screenshot gallery](docs/screenshots.md) for the visual editor and an
+earlier unlocked-state capture.
+
+[Watch the 30-second overview](docs/media/desloc-overview.mp4) of the companion
+integration and card, or read its [scene synopsis](docs/screenshots.md#video-overview).
+The silent English walkthrough uses captured UI screenshots; it is not a
+continuous recording or proof of physical lock actuation.
 
 ## Install through HACS
 
@@ -84,20 +94,14 @@ sensor and RSSI sensor in dBm. Omit sensors that do not exist.
 Reported bolt state is not a door-open sensor and may be cached by the cloud.
 After an uncertain result, check the physical lock before issuing another command.
 
+Cancelling the confirmation closes the prompt without sending a command.
+
 ```mermaid
-sequenceDiagram
-    actor User
-    participant Card as DESLOC Lock Card
-    participant HA as Home Assistant
-    participant Integration as Lock integration
-    User->>Card: Tap Unlock
-    Card->>User: Request confirmation
-    User->>Card: Confirm
-    Card->>HA: lock.unlock for selected entity
-    HA->>Integration: Execute once
-    Integration-->>HA: State update or error
-    HA-->>Card: Updated entity state
-    Card-->>User: Reported state / error
+flowchart TD
+    tap["Tap Unlock<br/>on the card"] --> confirm{"Confirm<br/>unlock?"}
+    confirm -- Confirm --> ha["Home Assistant<br/>lock.unlock for<br/>the selected entity"]
+    ha --> integration["Lock integration<br/>executes once"]
+    integration --> result["Card shows reported<br/>state or error"]
 ```
 
 ## Development
