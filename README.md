@@ -90,19 +90,12 @@ Reported bolt state is not a door-open sensor and may be cached by the cloud.
 After an uncertain result, check the physical lock before issuing another command.
 
 ```mermaid
-sequenceDiagram
-    actor User
-    participant Card as DESLOC Lock Card
-    participant HA as Home Assistant
-    participant Integration as Lock integration
-    User->>Card: Tap Unlock
-    Card->>User: Request confirmation
-    User->>Card: Confirm
-    Card->>HA: lock.unlock for selected entity
-    HA->>Integration: Execute once
-    Integration-->>HA: State update or error
-    HA-->>Card: Updated entity state
-    Card-->>User: Reported state / error
+flowchart TD
+    tap["Tap Unlock<br/>on the card"] --> confirm{"Confirm unlock?"}
+    confirm -- Cancel --> stop["No command"]
+    confirm -- Confirm --> ha["Home Assistant<br/>lock.unlock for<br/>the selected entity"]
+    ha --> integration["Lock integration<br/>executes once"]
+    integration --> result["Card shows reported<br/>state or error"]
 ```
 
 ## Development
