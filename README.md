@@ -12,21 +12,46 @@ The card uses Home Assistant entities and actions; it never receives DESLOC
 credentials or connects directly to the vendor cloud. It can also display other
 standard HA lock entities, but their behavior depends on the underlying integration.
 
+![DESLOC Lock Card in Home Assistant, showing reported state, battery, Wi-Fi, and controls](docs/images/lock-card.jpg)
+
 ## Install through HACS
+
+**Not yet published in the default HACS catalog.** Add the repository manually;
+submission for review does not mean it has been accepted. The card and integration
+are separate repositories: install the [DESLOC integration](https://github.com/ha-homelab/ha-desloc#installation)
+first if you do not already have a lock entity.
 
 1. Add `https://github.com/ha-homelab/ha-desloc-card` to HACS **Custom repositories**,
    type **Dashboard** (called **Plugin** in some versions).
-2. Download **DESLOC Lock Card** and reload the browser.
+2. Download the latest stable release of **DESLOC Lock Card** (not `main` or a
+   prerelease) and reload the browser.
 3. Edit a dashboard, add **DESLOC Lock Card**, and select the lock and optional
    battery/Wi-Fi sensors in the visual editor.
 
-This is a custom repository, not an entry in the default HACS catalog.
 Home Assistant 2026.9.1 is the tested baseline.
 
 If HACS does not register a resource automatically, add
 `/hacsfiles/ha-desloc-card/ha-desloc-card.js` as a **JavaScript module** under
-dashboard resources. Manual installation: copy the JS file to `config/www/`
-and register `/local/ha-desloc-card.js` as a JavaScript module instead.
+**Settings → Dashboards → ⋮ → Resources**. Enable **Advanced mode** in your
+HA profile if the resources menu is hidden.
+
+## Manual installation without HACS
+
+1. Download `ha-desloc-card.js` from the [latest stable release](https://github.com/ha-homelab/ha-desloc-card/releases/latest).
+2. Copy it into your HA configuration directory as `www/ha-desloc-card.js`.
+   Create `www` if it does not exist. For HA OS, the full path is
+   `/config/www/ha-desloc-card.js`. For Container, use the configuration directory
+   mounted at `/config`.
+3. Under **Settings → Dashboards → ⋮ → Resources**, add
+   `/local/ha-desloc-card.js` with type **JavaScript module**. Enable Advanced mode
+   in your profile if needed. If you just created `www`, restart HA once.
+4. Reload the browser, edit a dashboard, and add **DESLOC Lock Card**. Choose the
+   lock entity and optional sensors, or use the YAML below.
+
+To update, replace the JS file with the new stable release and reload the browser.
+If it remains cached, append the version to the resource URL, for example
+`/local/ha-desloc-card.js?v=0.1.1`. Do not register both the HACS and manual resource
+URLs at once.
 
 ## Configuration
 

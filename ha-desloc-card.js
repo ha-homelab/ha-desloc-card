@@ -1,5 +1,5 @@
 /* DESLOC Lock Card — MIT License, HA Homelab contributors. */
-const VERSION = "0.1.0";
+const VERSION = "0.1.1";
 const STATES = { locked: "Locked", unlocked: "Unlocked", locking: "Locking…", unlocking: "Unlocking…", jammed: "Jammed", unknown: "Unknown", unavailable: "Unavailable" };
 
 export class DeslocLockCard extends HTMLElement {
