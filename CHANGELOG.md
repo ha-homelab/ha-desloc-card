@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.2-beta.1 — 2026-10-04
+
+- Identify the selected lock by its displayed name in unlock confirmation.
+- Use a neutral reported-state caption for DESLOC and other HA lock entities.
+- Cover configured names, renamed entities, fallback labels, cancellation, and
+  unchanged service targets with regression tests.
+
+This is a prerelease for opt-in testing. Existing command confirmation, pending
+state handling, and single-shot service calls are preserved.
+
 ## 0.1.1 — 2026-10-01
 
 - Expand the English HACS custom-repository and manual installation instructions.

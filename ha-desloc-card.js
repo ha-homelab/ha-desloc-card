@@ -1,5 +1,5 @@
 /* DESLOC Lock Card — MIT License, HA Homelab contributors. */
-const VERSION = "0.1.1";
+const VERSION = "0.1.2-beta.1";
 const STATES = { locked: "Locked", unlocked: "Unlocked", locking: "Locking…", unlocking: "Unlocking…", jammed: "Jammed", unknown: "Unknown", unavailable: "Unavailable" };
 
 export class DeslocLockCard extends HTMLElement {
@@ -33,7 +33,7 @@ export class DeslocLockCard extends HTMLElement {
         @media (prefers-reduced-motion: no-preference) { .disc { transition: background .2s; } }
       </style>
       <ha-card>
-        <header><div><h2></h2><p class="caption">DESLOC · Cloud status</p></div><button class="info" aria-label="Show lock details"><ha-icon icon="mdi:information-outline"></ha-icon></button></header>
+        <header><div><h2></h2><p class="caption">Reported lock state</p></div><button class="info" aria-label="Show lock details"><ha-icon icon="mdi:information-outline"></ha-icon></button></header>
         <div class="hero"><div class="disc"><ha-icon></ha-icon></div><div class="state" role="status" aria-live="polite"></div></div>
         <div class="telemetry"><span class="metric battery"></span><span class="metric signal"></span></div>
         <div class="actions"><button class="primary lock">Lock</button><button class="unlock">Unlock</button></div>
@@ -66,13 +66,16 @@ export class DeslocLockCard extends HTMLElement {
     return { entity };
   }
 
+  _displayName() {
+    return this._config.name || this._hass.states[this._config.entity]?.attributes?.friendly_name || this._config.entity;
+  }
+
   _render() {
     if (!this._config || !this._hass) return;
     const state = this._hass.states[this._config.entity]?.state || "unavailable";
     const known = ["locked", "unlocked"].includes(state);
     const transitioning = ["locking", "unlocking"].includes(state);
-    const name = this._config.name || this._hass.states[this._config.entity]?.attributes?.friendly_name || "DESLOC lock";
-    this.shadowRoot.querySelector("h2").textContent = name;
+    this.shadowRoot.querySelector("h2").textContent = this._displayName();
     this.shadowRoot.querySelector(".state").textContent = STATES[state] || "Unknown";
     const disc = this.shadowRoot.querySelector(".disc");
     disc.dataset.state = Object.hasOwn(STATES, state) ? state : "unknown";
@@ -95,7 +98,7 @@ export class DeslocLockCard extends HTMLElement {
   async _command(service) {
     if (this._busy || !this._config || !this._hass || !["lock", "unlock"].includes(service)) return;
     if (this.shadowRoot.querySelector(`.${service}`).disabled) return;
-    if (service === "unlock" && !window.confirm("Unlock this door? This sends a physical unlock command.")) return;
+    if (service === "unlock" && !window.confirm(`Unlock “${this._displayName()}”? This sends a physical unlock command.`)) return;
     this._busy = true;
     this._error = "";
     this._render();
@@ -141,5 +144,5 @@ export class DeslocLockCardEditor extends HTMLElement {
 if (!customElements.get("desloc-lock-card")) customElements.define("desloc-lock-card", DeslocLockCard);
 if (!customElements.get("desloc-lock-card-editor")) customElements.define("desloc-lock-card-editor", DeslocLockCardEditor);
 window.customCards = window.customCards || [];
-if (!window.customCards.some(card => card.type === "desloc-lock-card")) window.customCards.push({ type: "desloc-lock-card", name: "DESLOC Lock Card", description: "Lock control, cloud state, battery and Wi-Fi signal.", preview: true });
+if (!window.customCards.some(card => card.type === "desloc-lock-card")) window.customCards.push({ type: "desloc-lock-card", name: "DESLOC Lock Card", description: "Lock control, reported state, battery and Wi-Fi signal.", preview: true });
 console.info(`DESLOC Lock Card ${VERSION}`);

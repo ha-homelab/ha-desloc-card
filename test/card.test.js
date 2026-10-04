@@ -19,6 +19,41 @@ test("unlock calls the HA service only after confirmation", async () => {
   await card._command("unlock");
   assert.deepEqual(calls, [["lock", "unlock", { entity_id: "lock.test" }]]);
 });
+test("unlock confirmation identifies the configured display name without changing its target", async () => {
+  card.setConfig({ entity: "lock.test", name: "Side door" });
+  let prompt;
+  window.confirm = message => { prompt = message; return true; };
+  await card._command("unlock");
+  assert.equal(card.shadowRoot.querySelector("h2").textContent, "Side door");
+  assert.equal(prompt, "Unlock “Side door”? This sends a physical unlock command.");
+  assert.deepEqual(calls, [["lock", "unlock", { entity_id: "lock.test" }]]);
+});
+test("unlock confirmation follows the latest friendly name and cancellation sends nothing", async () => {
+  let prompt;
+  window.confirm = message => { prompt = message; return false; };
+  card.hass = { ...card.hass, states: { "lock.test": { state: "locked", attributes: { friendly_name: "Back door" } } } };
+  await card._command("unlock");
+  assert.equal(card.shadowRoot.querySelector("h2").textContent, "Back door");
+  assert.equal(prompt, "Unlock “Back door”? This sends a physical unlock command.");
+  assert.equal(calls.length, 0);
+  assert.equal(card.shadowRoot.querySelector(".unlock").disabled, false);
+});
+test("unnamed locks use their entity ID in the title and unlock confirmation", async () => {
+  card.hass = { ...card.hass, states: { "lock.test": { state: "locked", attributes: {} } } };
+  let prompt;
+  window.confirm = message => { prompt = message; return true; };
+  await card._command("unlock");
+  assert.equal(card.shadowRoot.querySelector("h2").textContent, "lock.test");
+  assert.equal(prompt, "Unlock “lock.test”? This sends a physical unlock command.");
+  assert.deepEqual(calls, [["lock", "unlock", { entity_id: "lock.test" }]]);
+});
+test("caption does not infer a vendor or cloud transport from entity IDs and names", () => {
+  for (const [entity, friendly_name] of [["lock.other", "Local door"], ["lock.desloc", "DESLOC front door"]]) {
+    card.setConfig({ entity });
+    card.hass = { ...card.hass, states: { [entity]: { state: "locked", attributes: { friendly_name } } } };
+    assert.equal(card.shadowRoot.querySelector(".caption").textContent, "Reported lock state");
+  }
+});
 test("concurrent clicks never repeat a pending command", async () => {
   let resolve;
   card.hass.callService = (...args) => { calls.push(args); return new Promise(r => { resolve = r; }); };
