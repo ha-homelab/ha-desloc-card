@@ -84,7 +84,11 @@ sensor and RSSI sensor in dBm. Omit sensors that do not exist.
 
 ## Behavior
 
-- Unlock requires a reported **locked** state and an explicit confirmation.
+- Unlock requires a reported **locked** state and an explicit confirmation that
+  names the selected lock. The title and confirmation use the configured display
+  name, then the entity's current friendly name, then its entity ID.
+- The caption says **Reported lock state** for every entity; it does not infer a
+  vendor or cloud connection from the entity ID or name.
 - Commands are disabled while a request or state transition is in progress.
 - Unknown state permits an explicit **Lock** action for recovery, but not Unlock.
 - Unavailable entities disable both actions. Missing sensor data is displayed as
