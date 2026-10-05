@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.2-rc.1 — 2026-10-04
+
+- Promote the beta to a release candidate with no behavior changes.
+- Keep named unlock confirmation and the neutral reported-state caption.
+
+The beta passed all 13 automated card tests. This release candidate remains
+an opt-in prerelease with the same runtime behavior.
+
 ## 0.1.2-beta.1 — 2026-10-04
 
 - Identify the selected lock by its displayed name in unlock confirmation.
