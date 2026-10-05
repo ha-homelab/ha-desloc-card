@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.2 — 2026-10-05
+
+- Promote the installed 0.1.2-rc.1 candidate to stable with unchanged behavior.
+- Identify the selected lock by its displayed name in unlock confirmation.
+- Use a neutral reported-state caption for DESLOC and other HA lock entities.
+- Preserve cancellation, pending-state handling, and single-shot service calls.
+
+Validation: 13 automated card tests. The release candidate was installed through
+HACS and its served JavaScript was verified against the release artifact.
+
 ## 0.1.2-rc.1 — 2026-10-04
 
 - Promote the beta to a release candidate with no behavior changes.

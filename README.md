@@ -65,7 +65,7 @@ HA profile if the resources menu is hidden.
 
 To update, replace the JS file with the new stable release and reload the browser.
 If it remains cached, append the version to the resource URL, for example
-`/local/ha-desloc-card.js?v=0.1.1`. Do not register both the HACS and manual resource
+`/local/ha-desloc-card.js?v=0.1.2`. Do not register both the HACS and manual resource
 URLs at once.
 
 ## Configuration
