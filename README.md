@@ -134,3 +134,9 @@ Report vulnerabilities privately using GitHub's security reporting when availabl
 ## License
 
 [MIT](LICENSE). Names and trademarks belong to their respective owners.
+
+## Project maintenance
+
+See [contribution and test requirements](CONTRIBUTING.md), the
+[security reporting policy](SECURITY.md), [security design](docs/security-design.md),
+and the [OpenSSF evidence and remaining criteria](docs/openssf-evidence.md).
