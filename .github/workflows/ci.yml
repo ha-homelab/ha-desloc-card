@@ -19,10 +19,14 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      - name: Install workflow validation dependencies
+        run: |
+          python3 -m venv .venv-ci
+          .venv-ci/bin/python -m pip install --disable-pip-version-check --require-hashes -r scripts/requirements-ci.txt
       - name: Check atomic CodeQL updates
         run: |
-          python3 -m unittest discover -s scripts -p 'test_ci_actions.py'
-          python3 scripts/check_ci_actions.py
+          .venv-ci/bin/python -m unittest discover -s scripts -p 'test_ci_actions.py'
+          .venv-ci/bin/python scripts/check_ci_actions.py
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '24'

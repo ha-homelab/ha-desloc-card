@@ -6,3 +6,5 @@ node_modules/
 # Local Python CI checks
 __pycache__/
 *.py[cod]
+
+.venv-ci/
