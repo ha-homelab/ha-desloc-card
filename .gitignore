@@ -2,3 +2,7 @@ node_modules/
 .private/
 *.log
 .DS_Store
+
+# Local Python CI checks
+__pycache__/
+*.py[cod]
