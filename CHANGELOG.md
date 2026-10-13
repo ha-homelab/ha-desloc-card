@@ -1,10 +1,24 @@
 # Changelog
 
-## Unreleased
+## [0.1.3] - Development line
 
 - Render unknown lock states as Unknown, including JavaScript prototype-property names.
 - Add bounded, offline RC-only Jazzer.js campaigns for card rendering and command confirmation.
 - Publish HACS-compatible card assets with frozen versions, checksums and source-bound release evidence.
+
+### Upgrade
+
+Use the existing HACS custom repository or replace ha-desloc-card.js manually,
+then reload the browser. The HACS asset name and card configuration stay the
+same. This preview adds no migration or automatic lock action. Check the card
+on desktop and mobile before considering stable promotion.
+
+### Security
+
+Unknown state strings, including JavaScript prototype-property names, now
+render as Unknown. Unlock still requires a reported locked state and explicit
+confirmation. Offline RC fuzzing uses synthetic data and stub service calls;
+it does not verify physical lock state or authorize real device operations.
 
 ## 0.1.2 — 2026-10-05
 
