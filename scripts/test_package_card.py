@@ -31,6 +31,26 @@ class CardPackageTests(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 package_card.package(root, root / "dist", "a" * 40)
 
+    def test_preserves_utf8_and_source_line_endings(self):
+        for newline in (b"\n", b"\r\n"):
+            with self.subTest(newline=newline), tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                source = newline.join([
+                    "/* Tür geschlossen — ドア */".encode("utf-8"),
+                    b'const VERSION = "0.1.2";',
+                    b'export const label = "locked";',
+                    b'',
+                ])
+                (root / package_card.ENTRY).write_bytes(source)
+                (root / "package.json").write_bytes(b'{"version":"0.1.3-rc.1"}')
+                entry = package_card.package(root, root / "dist", "a" * 40)
+                self.assertEqual(entry.read_bytes(), source.replace(b'"0.1.2"', b'"0.1.3-rc.1"'))
+                metadata = (entry.parent / "ha-desloc-card.version.json").read_bytes()
+                checksums = (entry.parent / "SHA256SUMS").read_bytes()
+                self.assertNotIn(b"\r", metadata)
+                self.assertNotIn(b"\r", checksums)
+                self.assertEqual(json.loads(metadata)["sha256"], hashlib.sha256(entry.read_bytes()).hexdigest())
+
     def test_missing_or_ambiguous_version_fails_before_output(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
