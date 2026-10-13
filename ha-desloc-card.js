@@ -1,5 +1,5 @@
 /* DESLOC Lock Card — MIT License, HA Homelab contributors. */
-const VERSION = "0.1.3-beta.1";
+const VERSION = "0.1.3";
 const STATES = { locked: "Locked", unlocked: "Unlocked", locking: "Locking…", unlocking: "Unlocking…", jammed: "Jammed", unknown: "Unknown", unavailable: "Unavailable" };
 
 export class DeslocLockCard extends HTMLElement {
@@ -76,7 +76,7 @@ export class DeslocLockCard extends HTMLElement {
     const known = ["locked", "unlocked"].includes(state);
     const transitioning = ["locking", "unlocking"].includes(state);
     this.shadowRoot.querySelector("h2").textContent = this._displayName();
-    this.shadowRoot.querySelector(".state").textContent = STATES[state] || "Unknown";
+    this.shadowRoot.querySelector(".state").textContent = Object.hasOwn(STATES, state) ? STATES[state] : "Unknown";
     const disc = this.shadowRoot.querySelector(".disc");
     disc.dataset.state = Object.hasOwn(STATES, state) ? state : "unknown";
     disc.querySelector("ha-icon").setAttribute("icon", state === "locked" ? "mdi:lock" : state === "unlocked" ? "mdi:lock-open-variant" : "mdi:lock-question");
