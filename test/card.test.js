@@ -127,3 +127,14 @@ test("pending unlock keeps commands gated until the latest state is settled", as
   assert.equal(calls.length, 2);
   assert.deepEqual(calls[1], ["lock", "lock", { entity_id: "lock.test" }]);
 });
+
+
+test("prototype property names remain unknown states and cannot unlock", async () => {
+  for (const state of ["__proto__", "constructor", "toString", "hasOwnProperty"]) {
+    card.hass = { ...card.hass, states: { "lock.test": { state, attributes: {} } } };
+    assert.equal(card.shadowRoot.querySelector(".state").textContent, "Unknown");
+    assert.equal(card.shadowRoot.querySelector(".disc").dataset.state, "unknown");
+    await card._command("unlock");
+  }
+  assert.equal(calls.length, 0);
+});

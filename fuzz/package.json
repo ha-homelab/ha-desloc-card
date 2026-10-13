@@ -1,0 +1,9 @@
+{
+  "name": "ha-desloc-card-fuzz",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@jazzer.js/core": "4.0.0",
+    "happy-dom": "20.14.6"
+  }
+}

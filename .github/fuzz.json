@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "language": "javascript",
+  "setup": [
+    ["npm", "ci", "--prefix", "fuzz", "--ignore-scripts", "--no-audit", "--no-fund"]
+  ],
+  "targets": [
+    {
+      "name": "render-state",
+      "engine": "libfuzzer",
+      "command": ["node", "--max-old-space-size=512", "fuzz/node_modules/@jazzer.js/core/dist/cli.js", "fuzz/render-state.mjs", "--"],
+      "corpus": "fuzz/corpus/render-state",
+      "seconds": 60
+    },
+    {
+      "name": "unlock-boundary",
+      "engine": "libfuzzer",
+      "command": ["node", "--max-old-space-size=512", "fuzz/node_modules/@jazzer.js/core/dist/cli.js", "fuzz/unlock-boundary.mjs", "--"],
+      "corpus": "fuzz/corpus/unlock-boundary",
+      "seconds": 60
+    }
+  ]
+}
