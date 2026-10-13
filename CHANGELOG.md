@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Render unknown lock states as Unknown, including JavaScript prototype-property names.
+- Add bounded, offline RC-only Jazzer.js campaigns for card rendering and command confirmation.
+- Publish HACS-compatible card assets with frozen versions, checksums and source-bound release evidence.
+
 ## 0.1.2 — 2026-10-05
 
 - Promote the installed 0.1.2-rc.1 candidate to stable with unchanged behavior.

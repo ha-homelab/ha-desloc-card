@@ -8,3 +8,9 @@ __pycache__/
 *.py[cod]
 
 .venv-ci/
+
+# Generated release evidence
+release-dist/
+release-assets/
+.release-plan.json
+release-inputs-*.json

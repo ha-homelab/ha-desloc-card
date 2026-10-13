@@ -1,0 +1,55 @@
+{
+  "repository": "ha-homelab/ha-desloc-card",
+  "mode": "release",
+  "default_branch": "main",
+  "visibility": "public",
+  "version_file": "package.json",
+  "validation_workflows": [
+    "ci.yml",
+    "codeql.yml",
+    "dependency-review.yml"
+  ],
+  "artifact_pattern": "release-assets*",
+  "local_checks": [
+    "npm ci --ignore-scripts",
+    "npm test",
+    "python3 scripts/test_package_card.py"
+  ],
+  "notes": [
+    "HACS consumes the unchanged ha-desloc-card.js asset name; SHA256SUMS and version metadata bind the packaged entry point.",
+    "Releases contain the frontend card only. Synthetic DOM fuzzing does not establish physical lock state or Home Assistant device acceptance."
+  ],
+  "release_notes": "CHANGELOG.md",
+  "single_entry_ci": true,
+  "fuzzing": {
+    "toolkit_ref": "373eaac8e45b2ff2fbd4250ca4d55db3a28be3cc"
+  },
+  "versioning": {
+    "schema": 1,
+    "promotion": "promote-bytes",
+    "files": [
+      {
+        "path": "package.json",
+        "format": "json",
+        "field": "version",
+        "value": "package"
+      },
+      {
+        "path": "package-lock.json",
+        "format": "npm-lock",
+        "package": "ha-desloc-card",
+        "value": "package"
+      }
+    ],
+    "artifacts": [
+      {
+        "path": "ha-desloc-card.version.json",
+        "format": "json",
+        "field": "version",
+        "value": "package"
+      }
+    ],
+    "toolkit_revision": "373eaac8e45b2ff2fbd4250ca4d55db3a28be3cc"
+  },
+  "toolkit_revision": "373eaac8e45b2ff2fbd4250ca4d55db3a28be3cc"
+}

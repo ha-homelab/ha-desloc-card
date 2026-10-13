@@ -2,6 +2,8 @@
 
 [![Checks](https://github.com/ha-homelab/ha-desloc-card/actions/workflows/ci.yml/badge.svg)](https://github.com/ha-homelab/ha-desloc-card/actions/workflows/ci.yml)
 
+[![Fuzzing: RC only](https://img.shields.io/badge/Fuzzing-RC%20only-blue)](docs/fuzzing.md)
+
 A Home Assistant dashboard card for [DESLOC for Home Assistant](https://github.com/ha-homelab/ha-desloc).
 Shows reported lock state, battery, and Wi-Fi signal, with lock/unlock controls,
 a visual editor, light/dark theme support, and a required unlock confirmation.
@@ -123,6 +125,9 @@ npm test
 Tests cover confirmation, duplicate clicks, failure behavior, unavailable states,
 safe rendering, and editor configuration. They mock HA; they do not operate a lock.
 Before a release, also check the card in Home Assistant on desktop and mobile sizes.
+The [RC fuzzing guide](docs/fuzzing.md) explains the isolated mutation targets,
+budgets and diagnostics; [release instructions](RELEASING.md) describe the
+versioned HACS assets and review gates.
 
 ## Contributing and security
 
