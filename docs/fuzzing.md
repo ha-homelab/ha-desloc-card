@@ -102,3 +102,21 @@ Then run the project commands above. Keep the source, plan and channel together;
 do not invent a release sequence or edit version fields by hand. Local packaging
 does not create a qualified release: the hosted pipeline still verifies the full
 build inventory, provenance and, for an RC, its own isolated fuzz report.
+
+## Deterministic target-contract checks
+
+Ordinary CI now replays the real fuzz target exports using the checked-in
+synthetic corpus, fixed malformed inputs and a bounded deterministic byte matrix.
+It awaits asynchronous targets and propagates assertion failures. This catches
+harness/production API drift without starting Jazzer or a mutation campaign.
+The RC preflight repeats this check after its locked setup.
+
+Run locally from the repository root:
+
+```sh
+npm ci --prefix fuzz --ignore-scripts --no-audit --no-fund
+node fuzz/replay.mjs
+```
+
+The replay preserves the same offline boundaries as the targets above; it does
+not qualify a release or substitute for the RC's isolated campaign.
