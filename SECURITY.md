@@ -31,3 +31,18 @@ This project provides a browser-side Home Assistant dashboard card for physical 
 The browser receives entity state and display text from Home Assistant. Keep untrusted state as text, preserve explicit unlock confirmation, and issue actions only for the configured entity. The confirmation is a user-interface safeguard; Home Assistant authorization and the integration enforce access to the physical lock. The card does not receive DESLOC cloud credentials.
 
 See [security design and validation boundaries](docs/security-design.md).
+
+## Coordinated response
+
+Use [the private GitHub report form](https://github.com/ha-homelab/ha-desloc-card/security/advisories/new)
+or **alvit.work@gmail.com** if that form is unavailable. Maintainers aim to
+acknowledge within 14 days. Assess impact, reproduce with synthetic data, agree
+on remediation/disclosure and prioritize critical issues over feature work.
+Confirmed medium-or-higher vulnerabilities must be fixed and released promptly,
+within 60 days of public disclosure; do not defer a critical fix to a feature release.
+Supported fixes target the latest release and default branch. Security release
+notes identify affected/fixed versions, mitigations and available advisory/CVE
+identifiers. Credit the reporter unless they request anonymity.
+
+This is the response policy, not a claim that reports were received or that
+past response times were measured. Home Assistant authenticates users and authorizes lock services. The card never receives cloud credentials. Entity state and names are untrusted text; unlock requires confirmation.

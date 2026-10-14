@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Include Python release helpers in CodeQL analysis.
+- Document governance, private reporting and current OpenSSF evidence limits.
+
 ## [0.1.3] - Development line
 
 - Render unknown lock states as Unknown, including JavaScript prototype-property names.
