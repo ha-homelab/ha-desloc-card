@@ -1,5 +1,7 @@
 # Release-candidate fuzzing
 
+> **Local packaging:** `python3 scripts/release.py package` is unsupported in this repository because no shell packaging adapter is installed. Use the [project commands below](#local-release-packaging); the generic example in `release-workflow.md` does not apply here.
+
 The public repository uses [Jazzer.js](https://github.com/CodeIntelligenceTesting/jazzer.js)
 through the shared `venus-os-ci-toolkit` release workflow. A reviewed
 `.github/fuzz.json` declares the targets and dependency setup. The reusable
@@ -76,3 +78,27 @@ run ID, attempt, manifest digest and exact successful target inventory. Fuzz
 validation receipts are separate from platform build receipts. An old RC made
 before adoption cannot satisfy the current fuzz policy. Beta and nightly
 releases have no fuzz qualification claim.
+
+## Local release packaging
+
+Use Python 3.12+ from the repository root:
+
+```sh
+python3 scripts/test_package_card.py
+python3 scripts/package_card.py
+```
+
+This writes `ha-desloc-card.js`, checksums and version metadata to a new `release-dist/` directory. It preserves the HACS entry-point filename and stamps the version from the prepared package metadata. It does not install the card into Home Assistant. Use a clean disposable checkout and a new output directory.
+
+To reproduce an already allocated beta or RC, first check out the exact source
+commit from its published `release-manifest.json`, restore that manifest's
+`version_plan` object as `.release-plan.json`, and apply its version overlay:
+
+```sh
+python3 scripts/version_plan.py sync --root . --plan .release-plan.json
+```
+
+Then run the project commands above. Keep the source, plan and channel together;
+do not invent a release sequence or edit version fields by hand. Local packaging
+does not create a qualified release: the hosted pipeline still verifies the full
+build inventory, provenance and, for an RC, its own isolated fuzz report.
