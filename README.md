@@ -1,5 +1,7 @@
 # DESLOC Lock Card
 
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/15472/badge)](https://www.bestpractices.dev/en/projects/15472)
+
 [![Checks](https://github.com/ha-homelab/ha-desloc-card/actions/workflows/ci.yml/badge.svg)](https://github.com/ha-homelab/ha-desloc-card/actions/workflows/ci.yml)
 
 [![Fuzzing: RC only](https://img.shields.io/badge/Fuzzing-RC%20only-blue)](docs/fuzzing.md)
@@ -145,3 +147,9 @@ Report vulnerabilities privately using GitHub's security reporting when availabl
 See [contribution and test requirements](CONTRIBUTING.md), the
 [security reporting policy](SECURITY.md), [security design](docs/security-design.md),
 and the [OpenSSF evidence and remaining criteria](docs/openssf-evidence.md).
+
+## Project practices
+
+[Contribute](CONTRIBUTING.md) · [Governance](GOVERNANCE.md) ·
+[Code of Conduct](CODE_OF_CONDUCT.md) · [Roadmap](ROADMAP.md) ·
+[Quality and assessment scope](docs/quality.md)

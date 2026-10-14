@@ -37,3 +37,27 @@ test assertions enabled, resolve new warnings, and document any remaining
 warning with its reason and scope. Do not suppress a real security finding to
 obtain a passing check. Wait for required checks and independent review before
 merging; do not use an administrator bypass.
+
+## Contribution rights and coding conventions
+
+Submit only work you have the right to contribute under this repository's
+applicable FLOSS licenses. Preserve third-party license and provenance notices.
+No separate contributor agreement or mandatory DCO sign-off is currently used.
+Keep changes focused, follow the surrounding language style and documented
+interfaces, use synthetic fixtures, and explain security/compatibility effects.
+New major functionality must include automated behavior tests. Fixes should
+include a reproducer that fails before the change, or document why automation
+is infeasible. New or changed interfaces require matching documentation.
+
+See [governance](GOVERNANCE.md), [conduct](CODE_OF_CONDUCT.md),
+[roadmap](ROADMAP.md) and [quality evidence](docs/quality.md).
+
+### Language style
+
+Use PEP 8's four-space indentation and explicit imports for Python; keep
+maintained Python compatible with the declared runtime and enabled Ruff rules
+where configured. JavaScript/TypeScript uses two-space indentation, semicolons,
+strict modules and explicit interface types where TypeScript is used. Native
+C++ changes follow the surrounding ESPHome style, use explicit bounds and avoid
+unchecked pointer arithmetic. Do not reformat vendored code independently of
+its recorded upstream source. Existing exceptions must be explained in review.
