@@ -1,6 +1,26 @@
 # Changelog
 
-## [0.1.4] - Development line
+## [0.1.5] - Development line
+
+### Changed
+
+- Refresh the pinned CodeRabbit review and autofix workflow revisions while retaining the current fuzz qualification runtime.
+- Record the second D110 Plus community report, including PIN functionality, without claiming a particular PIN creation workflow or keypad test.
+- Reconcile the release history with the published 0.1.3 and 0.1.4 releases.
+
+### Upgrade
+
+This beta is an opt-in preview. Use the existing HACS custom repository or manual
+installation procedure, then reload the browser. The card's runtime behavior,
+configuration, and release asset name are unchanged.
+
+### Security
+
+Existing unlock confirmation and one-shot command behavior are unchanged. This
+release updates development automation and documentation; it adds no device
+permissions or automatic lock actions.
+
+## [0.1.4] - 2026-10-14
 
 ### Changed
 
@@ -21,16 +41,13 @@ The campaign operates offline on synthetic inputs. It rejects missing or invalid
 seed corpora and incomplete execution evidence. These checks do not establish
 untested hardware, integrations, credentials, or deployment behavior.
 
-## Unreleased
-
-- Include Python release helpers in CodeQL analysis.
-- Document governance, private reporting and current OpenSSF evidence limits.
-
-## [0.1.3] - Development line
+## [0.1.3] - 2026-10-14
 
 - Render unknown lock states as Unknown, including JavaScript prototype-property names.
 - Add bounded, offline RC-only Jazzer.js campaigns for card rendering and command confirmation.
 - Publish HACS-compatible card assets with frozen versions, checksums and source-bound release evidence.
+- Include Python release helpers in CodeQL analysis.
+- Document governance, private reporting and current OpenSSF evidence limits.
 
 ### Upgrade
 
