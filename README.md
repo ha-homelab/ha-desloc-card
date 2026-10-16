@@ -121,13 +121,20 @@ After an uncertain result, check the physical lock before issuing another comman
 
 Cancelling the confirmation closes the prompt without sending a command.
 
-```mermaid
-flowchart TD
-    tap["Tap Unlock<br/>on the card"] --> confirm{"Confirm<br/>unlock?"}
-    confirm -- Confirm --> ha["Home Assistant<br/>lock.unlock for<br/>the selected entity"]
-    ha --> integration["Lock integration<br/>executes once"]
-    integration --> result["Card shows reported<br/>state or error"]
-```
+[![Unlock flow: check HA state, confirm the selected lock, call its service once, and display the result](docs/diagrams/interaction.svg)](docs/diagrams/interaction.svg)
+
+The [visual process guide](docs/how-it-works.md) explains the interaction and
+[language selection](docs/diagrams/language-flow.svg), including regional
+fallback and right-to-left layout.
+
+## Release results
+
+[![v0.2.0: 44 passing tests, 24 locales in three browser engines, and two successful fuzz targets](docs/diagrams/release-results.svg)](docs/diagrams/release-results.svg)
+
+This **15 October 2026** snapshot describes v0.2.0, not live `main` status.
+Read the [results, sources, and release process](docs/release-results.md) for
+the automated checks and separate maintainer browser checks. They use synthetic
+HA state and do not establish physical lock operation.
 
 ## Development
 

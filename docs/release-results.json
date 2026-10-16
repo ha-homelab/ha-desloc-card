@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "snapshot_date_pacific": "2026-10-15",
+  "release": "v0.2.0",
+  "source_sha": "f3bb1f32fd74bb0ba88969d6585237a444ae4b07",
+  "candidate": "v0.2.0-rc.1",
+  "release_url": "https://github.com/ha-homelab/ha-desloc-card/releases/tag/v0.2.0",
+  "rc_validation_url": "https://github.com/ha-homelab/ha-desloc-card/actions/runs/38833239966",
+  "stable_promotion_url": "https://github.com/ha-homelab/ha-desloc-card/actions/runs/38839561398",
+  "unit_tests_passed": 44,
+  "unit_tests_failed": 0,
+  "language_packs": 24,
+  "fuzz_report_url": "https://github.com/ha-homelab/ha-desloc-card/releases/download/v0.2.0/fuzz-report.json",
+  "fuzz_targets": [
+    {
+      "name": "render-state",
+      "engine": "libfuzzer",
+      "seconds": 60,
+      "executions": 44258,
+      "exit_code": 0
+    },
+    {
+      "name": "unlock-boundary",
+      "engine": "libfuzzer",
+      "seconds": 60,
+      "executions": 42716,
+      "exit_code": 0
+    }
+  ],
+  "published_file_count": 7,
+  "stable_files_identical_to_rc": true,
+  "scope": "Static release evidence. Counts do not measure code coverage, physical lock operation, cloud availability or reliability.",
+  "maintainer_browser_checks": {
+    "recorded_at": "2026-10-16T01:10:21.206Z",
+    "artifact_sha256": "e2d1b24fc1a66ae4fe81ef2f7c1ba8a8d87570a59d6b111c74479651949f5fa8",
+    "scope": "Local Playwright checks of the published JS with synthetic HA entities and stubbed service calls; not a hosted CI job.",
+    "browsers": [
+      {
+        "name": "chromium",
+        "version": "156.0.8078.4",
+        "locales": 24,
+        "result": "passed"
+      },
+      {
+        "name": "firefox",
+        "version": "157.0",
+        "locales": 24,
+        "result": "passed"
+      },
+      {
+        "name": "webkit",
+        "version": "27.2",
+        "locales": 24,
+        "result": "passed"
+      }
+    ],
+    "checks": [
+      "24 locales",
+      "regional and English fallback",
+      "per-card override",
+      "RTL direction",
+      "literal hostile names",
+      "375px layout",
+      "cancel sends no call",
+      "confirm sends one call",
+      "unavailable controls disabled"
+    ]
+  }
+}
