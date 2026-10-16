@@ -40,19 +40,29 @@ async function main() {
   const origin = `http://127.0.0.1:${server.address().port}`;
   let browser;
   let page;
+  let context;
   const errors = [];
+  const blockedRequests = [];
   const scenarios = [];
   try {
     browser = await playwright[engine].launch({ headless: true, ...(channel ? { channel } : {}) });
-    page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    context = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block' });
+    await context.tracing.start({ screenshots: true, snapshots: true, sources: true });
+    page = await context.newPage();
     page.on('pageerror', error => errors.push(error.message));
-    await page.route('**/*', route => route.request().url().startsWith(origin + '/') ? route.continue() : route.abort());
+    await context.route('**/*', route => {
+      const url = new URL(route.request().url());
+      if (url.origin === origin) return route.continue();
+      blockedRequests.push(url.origin);
+      return route.abort('blockedbyclient');
+    });
     const card = page.locator('desloc-lock-card');
     const unlock = card.locator('.unlock');
     const lock = card.locator('.lock');
     async function scenario(name, action) {
       await action();
       assert.deepEqual(errors, [], 'No browser page exceptions');
+      assert.deepEqual(blockedRequests, [], 'No unexpected external requests');
       scenarios.push(name);
     }
     async function unlockDialog(accept) {
@@ -149,9 +159,10 @@ async function main() {
     console.log(`PASS: ${scenarios.length} application scenarios on ${engine} ${browser.version()}`);
   } catch (error) {
     if (page) await page.screenshot({ path: path.join(output, 'failure.png'), fullPage: true }).catch(() => {});
-    fs.writeFileSync(path.join(output, 'failure.json'), JSON.stringify({ error: error.message, errors, scenarios }, null, 2));
+    fs.writeFileSync(path.join(output, 'failure.json'), JSON.stringify({ error: error.message, errors, blockedRequests, scenarios }, null, 2));
     throw error;
   } finally {
+    if (context) await context.tracing.stop({ path: path.join(output, 'trace.zip') }).catch(() => {});
     if (browser) await browser.close();
     await new Promise(resolve => server.close(resolve));
   }
