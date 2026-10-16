@@ -31,6 +31,11 @@ export async function fuzz(data) {
   assert.equal(title.children.length, 0, 'external labels must remain text');
   const numeric = text.trim() !== '' && Number.isFinite(Number(text));
   assert.equal(card.shadowRoot.querySelector('.battery').textContent, messages['metric.battery'].replace('{value}', () => numeric ? `\u2068${text}%\u2069` : messages['state.unavailable']));
-  assert.equal(card.shadowRoot.querySelector('.unlock').disabled, shownState !== 'locked');
+  const action = card.shadowRoot.querySelector('button.primary.action');
+  assert.equal(card.shadowRoot.querySelectorAll('.actions button').length, 1);
+  const disabled = ['unavailable', 'locking', 'unlocking'].includes(shownState);
+  const label = disabled ? `state.${shownState}` : shownState === 'locked' ? 'action.unlock' : 'action.lock';
+  assert.equal(action.disabled, disabled);
+  assert.equal(action.textContent, messages[label]);
   await window.happyDOM.waitUntilComplete();
 }

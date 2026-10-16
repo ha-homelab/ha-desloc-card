@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.3.0] - 2026-10-16
+
+### Changed
+
+- Replace the separate Lock and Unlock controls with one full-width action button. It offers Unlock for a reported locked state and Lock for an unlocked or uncertain state.
+- Show localized Locking or Unlocking progress while an action is pending; unavailable entities disable the button. All 24 language packs and existing card configuration remain supported.
+- Validate the intended command against current Home Assistant state independently of the DOM. Keep the confirmed entity and command fixed, and cancel if the target or allowed action changes during confirmation.
+- Keep the action selected at the start of a pointer or keyboard press. If the lock state changes before release, cancel that activation instead of sending the opposite command.
+- Preserve explicit unlock confirmation, one command per operation, safe error messages, and manual recovery without automatic retries.
+
+### Validation
+
+- Extend unit, translation, deterministic fuzz, and browser acceptance checks for the single action, state transitions, confirmation, pending requests, and keyboard interaction.
+- Browser fixtures use synthetic Home Assistant entities and stubbed service calls; they do not operate or certify a physical lock.
+
+### Upgrade
+
+Update the card through the existing HACS custom repository or replace the
+manual JavaScript resource, then reload the browser. No integration update,
+account reauthentication, or YAML migration is required. The older screenshot
+walkthrough remains a historical view of the two-button interface.
+
 ## [0.2.0] - Development line
 
 ### Added

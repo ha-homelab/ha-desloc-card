@@ -7,7 +7,7 @@
 [![Fuzzing: RC only](https://img.shields.io/badge/Fuzzing-RC%20only-blue)](docs/fuzzing.md)
 
 A Home Assistant dashboard card for [DESLOC for Home Assistant](https://github.com/ha-homelab/ha-desloc).
-Shows reported lock state, battery, and Wi-Fi signal, with lock/unlock controls,
+Shows reported lock state, battery, and Wi-Fi signal, with one adaptive action button,
 a visual editor, light/dark theme support, and a required unlock confirmation.
 The card is independent of DESLOC, Home Assistant, and HACS.
 
@@ -28,6 +28,8 @@ A looping 30-second English walkthrough of the companion integration and card,
 made from actual UI screenshots in Home Assistant 2026.9.1 with integration 0.3.0
 and card 0.1.1. It is not a continuous recording or proof of physical lock
 actuation. The cloud-reported bolt state may be cached; it is not a door-open sensor.
+Version 0.3.0 replaces the two controls shown in this historical walkthrough
+with one button that offers the action appropriate to the reported state.
 
 [Watch the MP4](docs/media/desloc-overview.mp4), read the
 [scene synopsis](docs/screenshots.md#video-overview), or browse the
@@ -103,14 +105,19 @@ in English.
 
 ## Behavior
 
+- One full-width button shows **Unlock** when the reported state is locked and
+  **Lock** when it is unlocked. The reported state remains visible above it.
 - Unlock requires a reported **locked** state and an explicit confirmation that
   names the selected lock. The title and confirmation use the configured display
   name, then the entity's current friendly name, then its entity ID.
 - The caption says **Reported lock state** for every entity; it does not infer a
   vendor or cloud connection from the entity ID or name.
-- Commands are disabled while a request or state transition is in progress.
-- Unknown state permits an explicit **Lock** action for recovery, but not Unlock.
-- Unavailable entities disable both actions. Missing sensor data is displayed as
+- During a request or state transition, the button shows **Locking…** or
+  **Unlocking…** and is disabled, even if HA reports the target state early.
+- Unknown, jammed, and unrecognized states retain an explicit **Lock** action
+  for manual recovery, but never Unlock. No action is sent merely because the
+  state or button label changes.
+- Unavailable or missing entities disable the button. Missing sensor data is displayed as
   unavailable, never as zero.
 - The card never retries a command automatically and never invents a successful
   state. A failed or unconfirmed action displays an error.
@@ -120,6 +127,10 @@ Reported bolt state is not a door-open sensor and may be cached by the cloud.
 After an uncertain result, check the physical lock before issuing another command.
 
 Cancelling the confirmation closes the prompt without sending a command.
+The selected entity and action are fixed at the start of a pointer or keyboard
+press and checked again at activation and after confirmation. If the target or
+state changes meanwhile, that activation is cancelled instead of switching to
+the opposite command.
 
 [![Unlock flow: check HA state, confirm the selected lock, call its service once, and display the result](docs/diagrams/interaction.svg)](docs/diagrams/interaction.svg)
 

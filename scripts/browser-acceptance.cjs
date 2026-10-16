@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
 const { once } = require('node:events');
+const { createHash } = require('node:crypto');
 
 async function main() {
   const playwright = require(process.env.CI_PLAYWRIGHT_MODULE);
@@ -11,12 +12,22 @@ async function main() {
   const channel = process.env.CI_BROWSER_CHANNEL;
   const output = process.env.CI_BROWSER_DIAGNOSTICS;
   const runtime = JSON.parse(fs.readFileSync(path.join(output, 'runtime.json'), 'utf8'));
-  const source = fs.readFileSync(path.join(__dirname, '../ha-desloc-card.js'));
+  const sourcePath = process.env.DESLOC_CARD_ASSET || path.join(__dirname, '../ha-desloc-card.js');
+  const source = fs.readFileSync(sourcePath);
+  const sourceSha256 = createHash('sha256').update(source).digest('hex');
   const fixture = `<!doctype html><meta charset="utf-8"><title>Synthetic lock fixture</title>
-    <style>body{margin:16px;font-family:Arial,sans-serif}ha-card{display:block;border:1px solid #999;
-    --primary-color:#1769aa;--primary-text-color:#111;--secondary-text-color:#555;--divider-color:#aaa}</style>
+    <style>:root{--primary-color:#1769aa;--text-primary-color:#fff;--primary-text-color:#17212b;
+    --secondary-text-color:#596775;--divider-color:#d0d7de;--ha-card-background:#fff;
+    --card-background-color:#fff;--secondary-background-color:#e8edf2;--warning-color:#a96800}
+    body{margin:16px;font-family:Arial,sans-serif;background:#f1f4f8;color:var(--primary-text-color)}</style>
     <script type="module">
       import {LOCALES, MESSAGES} from '/ha-desloc-card.js';
+      customElements.define('ha-card', class extends HTMLElement {
+        connectedCallback() {
+          this.style.display='block';this.style.border='1px solid var(--divider-color)';
+          this.style.borderRadius='16px';this.style.boxShadow='0 2px 8px #17212b0d';
+        }
+      });
       window.locales=LOCALES; window.messages=MESSAGES; window.calls=[];
       window.moreInfo=[]; window.addEventListener('hass-more-info', e=>window.moreInfo.push(e.detail.entityId));
       window.mode='pending';
@@ -57,69 +68,130 @@ async function main() {
       return route.abort('blockedbyclient');
     });
     const card = page.locator('desloc-lock-card');
-    const unlock = card.locator('.unlock');
-    const lock = card.locator('.lock');
+    const action = card.locator('button.primary.action');
     async function scenario(name, action) {
       await action();
       assert.deepEqual(errors, [], 'No browser page exceptions');
       assert.deepEqual(blockedRequests, [], 'No unexpected external requests');
       scenarios.push(name);
     }
-    async function unlockDialog(accept) {
+    async function unlockDialog(accept, key) {
       const dialog = page.waitForEvent('dialog');
-      const clicked = unlock.click();
+      if (key) await action.focus();
+      const activated = key ? page.keyboard.press(key) : action.click();
       const confirmation = await dialog;
       assert.match(confirmation.message(), /Synthetic door/);
       await (accept ? confirmation.accept() : confirmation.dismiss());
-      await clicked;
+      await activated;
     }
     await page.goto(origin);
     await page.waitForFunction(() => window.ready);
-    await scenario('render reported lock state and battery in the shadow DOM', async () => {
+    await scenario('render one unlock action for the reported locked state', async () => {
       assert.equal(await card.locator('.state').textContent(), 'Locked');
       assert.match(await card.locator('.battery').textContent(), /55%/);
-      assert.equal(await unlock.isEnabled(), true);
-      assert.equal(await lock.isDisabled(), true);
+      assert.equal(await card.locator('.actions button').count(), 1);
+      assert.equal(await action.textContent(), 'Unlock');
+      assert.equal(await action.isEnabled(), true);
+      const presentation = await action.evaluate(button => ({
+        foreground: getComputedStyle(button).color, background: getComputedStyle(button).backgroundColor,
+        surfaceDisplay: getComputedStyle(button.closest('ha-card')).display,
+      }));
+      assert.equal(presentation.foreground, 'rgb(255, 255, 255)');
+      assert.equal(presentation.background, 'rgb(23, 105, 170)');
+      assert.equal(presentation.surfaceDisplay, 'block');
     });
     await scenario('cancel physical unlock confirmation without sending a command', async () => {
       await unlockDialog(false);
       assert.deepEqual(await page.evaluate(() => calls), []);
     });
-    await scenario('confirm unlock once and keep both buttons gated until completion', async () => {
+    await scenario('confirm unlock once and keep the original pending direction until completion', async () => {
       await unlockDialog(true);
       assert.deepEqual(await page.evaluate(() => calls), [['lock', 'unlock', { entity_id: 'lock.fixture' }]]);
-      assert.equal(await unlock.isDisabled(), true);
-      assert.equal(await lock.isDisabled(), true);
-      await page.evaluate(() => { updateState('unlocked'); card.shadowRoot.querySelector('.unlock').click(); });
-      assert.equal(await lock.isDisabled(), true);
+      assert.equal(await action.isDisabled(), true);
+      assert.equal(await action.textContent(), 'Unlocking…');
+      await page.evaluate(() => { updateState('unlocked'); card.shadowRoot.querySelector('.action').click(); });
+      assert.equal(await action.isDisabled(), true);
+      assert.equal(await action.textContent(), 'Unlocking…');
       assert.equal(await page.evaluate(() => calls.length), 1);
       await page.evaluate(() => resolveCommand());
-      await page.waitForFunction(() => !card.shadowRoot.querySelector('.lock').disabled);
+      await page.waitForFunction(() => !card.shadowRoot.querySelector('.action').disabled);
+      assert.equal(await action.textContent(), 'Lock');
     });
     await scenario('send an explicit lock command from the reported unlocked state', async () => {
       await page.evaluate(() => { window.mode = 'success'; });
-      await lock.click();
+      await action.click();
       assert.deepEqual(await page.evaluate(() => calls[1]), ['lock', 'lock', { entity_id: 'lock.fixture' }]);
+      assert.equal(await card.locator('.state').textContent(), 'Unlocked', 'successful service call does not invent a bolt state');
+      assert.equal(await action.textContent(), 'Lock');
     });
-    await scenario('prevent unlock for uncertain and unavailable reported states', async () => {
-      for (const state of ['unknown', 'unavailable', 'locking', 'unlocking', 'jammed', '__proto__']) {
+    await scenario('show only the recovery lock action for uncertain reported states', async () => {
+      for (const state of ['unknown', 'jammed', '__proto__']) {
         await page.evaluate(state => updateState(state), state);
-        assert.equal(await unlock.isDisabled(), true, state);
+        assert.equal(await action.textContent(), 'Lock', state);
+        assert.equal(await action.isEnabled(), true, state);
       }
       assert.equal(await page.evaluate(() => calls.length), 2);
     });
+    await scenario('disable the action for unavailable, missing and transitional states', async () => {
+      for (const [state, label] of [['unavailable', 'Unavailable'], ['locking', 'Locking…'], ['unlocking', 'Unlocking…']]) {
+        await page.evaluate(state => updateState(state), state);
+        assert.equal(await action.textContent(), label);
+        assert.equal(await action.isDisabled(), true);
+        await page.evaluate(() => card.shadowRoot.querySelector('.action').click());
+      }
+      await page.evaluate(() => { delete hass.states['lock.fixture']; card.hass = hass; });
+      assert.equal(await action.textContent(), 'Unavailable');
+      assert.equal(await action.isDisabled(), true);
+      assert.equal(await page.evaluate(() => calls.length), 2);
+      await page.evaluate(() => { hass.states['lock.fixture'] = { state: 'locked', attributes: { friendly_name: 'Synthetic door' } }; card.hass = hass; });
+    });
     await scenario('show a safe error and permit a manual retry without automatic retry', async () => {
-      await page.evaluate(() => { updateState('locked'); window.mode = 'failure'; });
+      await page.evaluate(() => { window.mode = 'failure'; });
       await unlockDialog(true);
       await page.waitForFunction(() => card.shadowRoot.querySelector('.error').textContent.length > 0);
       assert.match(await card.locator('.error').textContent(), /Check the physical lock/);
       assert.equal(await page.evaluate(() => card.shadowRoot.textContent.includes('SENSITIVE_FIXTURE_DETAIL')), false);
-      assert.equal(await unlock.isEnabled(), true);
+      assert.equal(await action.isEnabled(), true);
+      assert.equal(await action.textContent(), 'Unlock');
       assert.equal(await page.evaluate(() => calls.length), 3);
       await page.evaluate(() => { window.mode = 'success'; });
       await unlockDialog(true);
       await page.waitForFunction(() => !card.shadowRoot.querySelector('.error').textContent);
       assert.equal(await page.evaluate(() => calls.length), 4);
+    });
+    await scenario('cancel unlock from a real Enter keyboard activation', async () => {
+      await unlockDialog(false, 'Enter');
+      assert.equal(await page.evaluate(() => calls.length), 4);
+    });
+    await scenario('confirm unlock from a real Space keyboard activation', async () => {
+      await unlockDialog(true, 'Space');
+      assert.equal(await page.evaluate(() => calls.length), 5);
+      assert.deepEqual(await page.evaluate(() => calls[4]), ['lock', 'unlock', { entity_id: 'lock.fixture' }]);
+    });
+    await scenario('activate lock with Enter and Space without an unlock confirmation', async () => {
+      await page.evaluate(() => updateState('unlocked'));
+      await action.focus();
+      await page.keyboard.press('Enter');
+      await page.keyboard.press('Space');
+      assert.deepEqual(await page.evaluate(() => calls.slice(5)), [
+        ['lock', 'lock', { entity_id: 'lock.fixture' }],
+        ['lock', 'lock', { entity_id: 'lock.fixture' }],
+      ]);
+    });
+    await scenario('preserve the action element and keyboard focus across state and locale renders', async () => {
+      await action.focus();
+      const stable = await page.evaluate(() => {
+        const button = card.shadowRoot.querySelector('.action');
+        updateState('locked');
+        hass.language = 'ar'; card.hass = hass;
+        const result = { same: button === card.shadowRoot.querySelector('.action'), focused: card.shadowRoot.activeElement === button, label: button.textContent };
+        hass.language = 'en'; card.hass = hass;
+        return result;
+      });
+      assert.equal(stable.same, true);
+      assert.equal(stable.focused, true);
+      assert.equal(stable.label, await page.evaluate(() => messages.ar['action.unlock']));
+      assert.equal(await page.evaluate(() => calls.length), 7);
     });
     await scenario('bubble the information action through the shadow root', async () => {
       await card.locator('.info').click();
@@ -132,7 +204,7 @@ async function main() {
       assert.equal(await card.locator('img').count(), 0);
       assert.equal(await page.evaluate(() => window.injected), undefined);
     });
-    await scenario('render all 24 locales and preserve RTL layout in a narrow viewport', async () => {
+    await scenario('render both action directions and disabled labels in all 24 locales on mobile', async () => {
       const locales = await page.evaluate(() => window.locales);
       assert.equal(locales.length, 24);
       for (const locale of locales) {
@@ -141,20 +213,71 @@ async function main() {
           return messages[code];
         }, locale.code);
         assert.equal(await card.getAttribute('dir'), locale.dir);
-        assert.equal(await unlock.textContent(), labels['action.unlock']);
-        assert.equal(await card.locator('.state').textContent(), labels['state.locked']);
-        assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, locale.code);
+        for (const [state, key, disabled] of [
+          ['locked', 'action.unlock', false], ['unlocked', 'action.lock', false],
+          ['unknown', 'action.lock', false], ['locking', 'state.locking', true],
+          ['unlocking', 'state.unlocking', true], ['unavailable', 'state.unavailable', true],
+        ]) {
+          await page.evaluate(state => updateState(state), state);
+          assert.equal(await action.textContent(), labels[key], `${locale.code}: ${state}`);
+          assert.equal(await action.isDisabled(), disabled, `${locale.code}: ${state}`);
+          assert.equal(await card.locator('.state').textContent(), labels[`state.${state}`]);
+          assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `${locale.code}: ${state}`);
+          assert.equal(await action.evaluate(button => button.scrollWidth <= button.clientWidth), true, `${locale.code}: button text fits`);
+        }
       }
+      assert.equal(await page.evaluate(() => calls.length), 7, 'locale and state renders never send commands');
+      await page.evaluate(() => { updateState('locked'); card.setConfig({ entity: 'lock.fixture', name: 'Synthetic door', language: 'en' }); });
     });
     await scenario('activate the information action with the keyboard', async () => {
       await card.locator('.info').focus();
       await page.keyboard.press('Enter');
       assert.equal(await page.evaluate(() => moreInfo.length), 2);
     });
-    await page.screenshot({ path: path.join(output, 'card.png'), fullPage: true });
+    for (const gesture of ['pointer', 'Space']) {
+      await scenario(`discard stale ${gesture} gestures without reversing the intended action`, async () => {
+        for (const [from, to] of [['locked', 'unlocked'], ['unlocked', 'locked']]) {
+          await page.evaluate(state => updateState(state), from);
+          const before = await page.evaluate(() => calls.length);
+          const unexpectedDialogs = [];
+          const dismissals = [];
+          const rejectUnexpectedDialog = dialog => {
+            unexpectedDialogs.push(dialog.message());
+            dismissals.push(dialog.dismiss());
+          };
+          page.on('dialog', rejectUnexpectedDialog);
+          try {
+            if (gesture === 'pointer') {
+              const box = await action.boundingBox();
+              assert.ok(box, 'action has a visible hit target');
+              await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+              await page.mouse.down();
+              await page.evaluate(state => updateState(state), to);
+              await page.mouse.up();
+            } else {
+              await action.focus();
+              await page.keyboard.down('Space');
+              await page.evaluate(state => updateState(state), to);
+              await page.keyboard.up('Space');
+            }
+            await Promise.all(dismissals);
+            assert.deepEqual(unexpectedDialogs, [], `${from} to ${to}: stale gesture must not prompt`);
+            assert.equal(await page.evaluate(() => calls.length), before, `${from} to ${to}: stale gesture must not send`);
+          } finally {
+            page.off('dialog', rejectUnexpectedDialog);
+          }
+          if (to === 'locked') await unlockDialog(true);
+          else await action.click();
+          assert.equal(await page.evaluate(() => calls.length), before + 1, 'the next deliberate click still works');
+          assert.deepEqual(await page.evaluate(() => calls.at(-1)), ['lock', to === 'locked' ? 'unlock' : 'lock', { entity_id: 'lock.fixture' }]);
+        }
+      });
+    }
+    await page.evaluate(() => { updateState('locked'); card.setConfig({ entity: 'lock.fixture', name: 'Synthetic door', battery_entity: 'sensor.battery', language: 'en' }); });
+    await page.screenshot({ path: path.join(output, 'card.png'), fullPage: true, animations: 'disabled' });
     fs.writeFileSync(process.env.CI_BROWSER_EVIDENCE, JSON.stringify({
       ...runtime, engine: browser.browserType().name(), browserVersion: browser.version(),
-      testsPassed: scenarios.length, testsFailed: 0, scenarios,
+      sourceSha256, testsPassed: scenarios.length, testsFailed: 0, scenarios,
     }, null, 2));
     console.log(`PASS: ${scenarios.length} application scenarios on ${engine} ${browser.version()}`);
   } catch (error) {

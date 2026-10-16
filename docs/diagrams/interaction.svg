@@ -8,7 +8,7 @@
 <rect x="32" y="29" width="42" height="5" rx="2" fill="#007f7a" stroke="none"/>
 <text x="86" y="37" font-size="13" font-weight="700" fill="#007f7a" text-anchor="start" letter-spacing="1.5">DASHBOARD BEHAVIOR</text>
 <text x="32" y="87" font-size="31" font-weight="750" fill="#14263d" text-anchor="start" letter-spacing="0">The Unlock path</text>
-<text x="32" y="121" font-size="18" font-weight="400" fill="#43566f" text-anchor="start" letter-spacing="0">A deliberate action through Home Assistant.</text>
+<text x="32" y="121" font-size="18" font-weight="400" fill="#43566f" text-anchor="start" letter-spacing="0">One adaptive button. An explicit Home Assistant command.</text>
 <rect x="48" y="157" width="624" height="97" rx="18" fill="#fff" stroke="#dbe4ee"/>
 <rect x="48" y="176" width="5" height="59" rx="2" fill="#245edb" stroke="none"/>
 <text x="72" y="191" font-size="22" font-weight="700" fill="#245edb" text-anchor="start" letter-spacing="0">01  Read Home Assistant entities</text>
@@ -16,8 +16,8 @@
 <path d="M 360 257 V 279" fill="none" stroke="#7789a0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
 <rect x="48" y="289" width="624" height="97" rx="18" fill="#fff" stroke="#dbe4ee"/>
 <rect x="48" y="308" width="5" height="59" rx="2" fill="#007f7a" stroke="none"/>
-<text x="72" y="323" font-size="22" font-weight="700" fill="#007f7a" text-anchor="start" letter-spacing="0">02  Check the action is allowed</text>
-<text x="72" y="353" font-size="19" font-weight="400" fill="#43566f" text-anchor="start" letter-spacing="0">Unlock needs a locked state and no pending call.</text>
+<text x="72" y="323" font-size="22" font-weight="700" fill="#007f7a" text-anchor="start" letter-spacing="0">02  Offer the allowed action</text>
+<text x="72" y="353" font-size="19" font-weight="400" fill="#43566f" text-anchor="start" letter-spacing="0">Locked → Unlock; pending → disabled.</text>
 <path d="M 360 389 V 411" fill="none" stroke="#7789a0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
 <rect x="48" y="421" width="624" height="97" rx="18" fill="#fff" stroke="#dbe4ee"/>
 <rect x="48" y="440" width="5" height="59" rx="2" fill="#a35b05" stroke="none"/>
@@ -26,7 +26,7 @@
 <rect x="48" y="628" width="624" height="97" rx="18" fill="#fff" stroke="#dbe4ee"/>
 <rect x="48" y="647" width="5" height="59" rx="2" fill="#7145b7" stroke="none"/>
 <text x="72" y="662" font-size="22" font-weight="700" fill="#7145b7" text-anchor="start" letter-spacing="0">04  Call the HA service once</text>
-<text x="72" y="692" font-size="19" font-weight="400" fill="#43566f" text-anchor="start" letter-spacing="0">Selected entity only; no automatic retry.</text>
+<text x="72" y="692" font-size="19" font-weight="400" fill="#43566f" text-anchor="start" letter-spacing="0">Recheck the same entity and action; send once.</text>
 <path d="M 360 728 V 750" fill="none" stroke="#7789a0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
 <rect x="48" y="760" width="624" height="97" rx="18" fill="#fff" stroke="#dbe4ee"/>
 <rect x="48" y="779" width="5" height="59" rx="2" fill="#237447" stroke="none"/>

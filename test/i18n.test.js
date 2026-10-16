@@ -45,8 +45,10 @@ for (const { code, dir } of LOCALES) {
     assert.equal(card.lang, code); assert.equal(card.dir, dir);
     assert.equal(card.shadowRoot.querySelector(".caption").textContent, dictionary.caption);
     assert.equal(card.shadowRoot.querySelector(".info").getAttribute("aria-label"), dictionary.details);
-    assert.equal(card.shadowRoot.querySelector(".lock").textContent, dictionary["action.lock"]);
-    assert.equal(card.shadowRoot.querySelector(".unlock").textContent, dictionary["action.unlock"]);
+    const action = card.shadowRoot.querySelector("button.primary.action");
+    assert.equal(card.shadowRoot.querySelectorAll(".actions button").length, 1);
+    assert.equal(action.textContent, dictionary["action.unlock"]);
+    assert.equal(action.disabled, false);
     assert.equal(card.shadowRoot.querySelector(".battery").textContent, dictionary["metric.battery"].replace("{value}", "\u206858%\u2069"));
     assert.equal(card.shadowRoot.querySelector(".signal").textContent, dictionary["metric.signal"].replace("{value}", "\u2068-57 dBm\u2069"));
     assert.equal(card.shadowRoot.querySelector("h2").textContent, name);
@@ -68,6 +70,10 @@ for (const { code, dir } of LOCALES) {
     for (const state of ["locked", "unlocked", "locking", "unlocking", "jammed", "unknown", "unavailable", "constructor", "__proto__"]) {
       card.hass = { ...hass, states: { ...hass.states, "lock.synthetic": { state, attributes: { friendly_name: name } } } };
       assert.equal(card.shadowRoot.querySelector(".state").textContent, dictionary[`state.${["constructor", "__proto__"].includes(state) ? "unknown" : state}`]);
+      const expectedLabel = ["locking", "unlocking", "unavailable"].includes(state) ? `state.${state}` : state === "locked" ? "action.unlock" : "action.lock";
+      assert.equal(action.textContent, dictionary[expectedLabel], state);
+      assert.equal(action.disabled, ["locking", "unlocking", "unavailable"].includes(state), state);
+      assert.equal(card.shadowRoot.querySelector("button.primary.action"), action, "renders preserve the action element");
       if (state !== "locked") { await card._command("unlock"); assert.equal(calls.length, 0); }
     }
     card.hass = hass;
@@ -97,7 +103,10 @@ test("HA profile switching never changes configuration or sends a command, inclu
   window.confirm = () => true;
   const pending = card._command("unlock");
   card.hass = { ...card.hass, locale: { language: "ar" } };
-  assert.equal(card.dir, "rtl"); assert.equal(card.shadowRoot.querySelector(".unlock").disabled, true);
+  assert.equal(card.dir, "rtl"); assert.equal(card.shadowRoot.querySelector(".action").disabled, true);
+  assert.equal(card.shadowRoot.querySelector(".action").textContent, MESSAGES.ar["state.unlocking"]);
+  card.hass = { ...card.hass, states: { ...hass.states, "lock.synthetic": { state: "unlocked", attributes: { friendly_name: name } } } };
+  assert.equal(card.shadowRoot.querySelector(".action").textContent, MESSAGES.ar["state.unlocking"], "the pending command keeps its original direction");
   await card._command("unlock"); await card._command("lock");
   assert.equal(calls.length, 1);
   resolve(); await pending; assert.equal(calls.length, 1);

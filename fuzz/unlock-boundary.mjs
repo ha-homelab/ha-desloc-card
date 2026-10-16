@@ -23,6 +23,7 @@ export async function fuzz(data) {
     return confirmation;
   };
   card._busy = busy;
+  card._pendingService = busy ? 'unlock' : undefined;
   card.hass = {
     locale: { language },
     states: { 'lock.synthetic': { state, attributes: {} } },
@@ -34,6 +35,8 @@ export async function fuzz(data) {
   const effectiveState = state || 'unavailable';
   const mayLock = !['locked', 'unavailable', 'locking', 'unlocking'].includes(effectiveState);
   const mayUnlock = effectiveState === 'locked';
+  assert.equal(card.shadowRoot.querySelectorAll('.actions button').length, 1);
+  assert.equal(card.shadowRoot.querySelector('.action').disabled, busy || (!mayLock && !mayUnlock));
   const permitted = !busy && ((service === 'lock' && mayLock) || (service === 'unlock' && mayUnlock && confirmation));
   await card._command(service);
   assert.equal(calls.length, permitted ? 1 : 0);

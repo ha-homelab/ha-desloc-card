@@ -12,15 +12,20 @@ The card itself never receives DESLOC credentials or contacts the vendor cloud.
 1. Read the configured HA entities. The visual editor selects one lock and
    optional sensors; missing readings remain unavailable instead of becoming
    zero. The card does not discover locks itself.
-2. Enable **Unlock** only for a reported locked state with no pending request.
-   Unavailable entities disable both controls; unknown state permits an
-   explicit **Lock** action for recovery, but not Unlock.
+2. Use one persistent action button. It offers **Unlock** only for a reported
+   locked state and **Lock** for an unlocked state. Unknown, jammed, and
+   unrecognized states retain manual **Lock** recovery. Unavailable or missing
+   entities disable the button; transitions and pending commands show localized
+   progress and keep it disabled.
 3. Ask for confirmation naming the selected lock. A configured name takes
    precedence over its current friendly name and then its entity ID. Cancelling
-   sends no service call.
-4. On confirmation, call HA's `lock.unlock` service once for that entity. The
-   pending flag blocks duplicate clicks. **Lock** uses `lock.lock` without the
-   Unlock confirmation prompt.
+   sends no service call. The action is captured when a pointer or keyboard
+   press begins; a state or target change before release cancels that activation.
+4. Recheck the selected entity and allowed action after confirmation, then call
+   HA's `lock.unlock` service once for that same entity. Cancel if the target or
+   allowed action changed. The pending flag blocks duplicate clicks. **Lock**
+   uses `lock.lock` without the Unlock confirmation prompt. The card never sends
+   a generic toggle command or derives permission from the button's DOM state.
 5. Render subsequent HA state or a localized command error. The card does not
    optimistically invent a successful result or automatically retry a command.
 
