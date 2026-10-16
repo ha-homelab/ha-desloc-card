@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1060" viewBox="0 0 720 1060" role="img" aria-labelledby="title description">
+<title id="title">The Unlock path</title>
+<desc id="description">Unlock is enabled only for a reported locked state when the card is not busy. The user confirms the selected lock name. Cancel sends no request. Confirmation sends one HA lock service call. The card displays subsequent HA state or a safe error and never connects to the DESLOC cloud directly.</desc>
+<defs><linearGradient id="wash" x2="1" y2="1"><stop stop-color="#f3f7ff"/><stop offset="1" stop-color="#f5fbf8"/></linearGradient>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7789a0"/></marker></defs>
+<rect width="720" height="1060" rx="24" fill="url(#wash)"/>
+<g font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif">
+<rect x="32" y="29" width="42" height="5" rx="2" fill="#007f7a" stroke="none"/>
+<text x="86" y="37" font-size="13" font-weight="700" fill="#007f7a" text-anchor="start" letter-spacing="1.5">DASHBOARD BEHAVIOR</text>
+<text x="32" y="87" font-size="31" font-weight="750" fill="#14263d" text-anchor="start" letter-spacing="0">The Unlock path</text>
+<text x="32" y="121" font-size="18" font-weight="400" fill="#43566f" text-anchor="start" letter-spacing="0">A deliberate action through Home Assistant.</text>
+<rect x="48" y="157" width="624" height="97" rx="18" fill="#fff" stroke="#dbe4ee"/>
+<rect x="48" y="176" width="5" height="59" rx="2" fill="#245edb" stroke="none"/>
+<text x="72" y="191" font-size="22" font-weight="700" fill="#245edb" text-anchor="start" letter-spacing="0">01  Read Home Assistant entities</text>
+<text x="72" y="221" font-size="19" font-weight="400" fill="#43566f" text-anchor="start" letter-spacing="0">The lock and optional sensors supply reported data.</text>
+<path d="M 360 257 V 279" fill="none" stroke="#7789a0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="48" y="289" width="624" height="97" rx="18" fill="#fff" stroke="#dbe4ee"/>
+<rect x="48" y="308" width="5" height="59" rx="2" fill="#007f7a" stroke="none"/>
+<text x="72" y="323" font-size="22" font-weight="700" fill="#007f7a" text-anchor="start" letter-spacing="0">02  Check the action is allowed</text>
+<text x="72" y="353" font-size="19" font-weight="400" fill="#43566f" text-anchor="start" letter-spacing="0">Unlock needs a locked state and no pending call.</text>
+<path d="M 360 389 V 411" fill="none" stroke="#7789a0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="48" y="421" width="624" height="97" rx="18" fill="#fff" stroke="#dbe4ee"/>
+<rect x="48" y="440" width="5" height="59" rx="2" fill="#a35b05" stroke="none"/>
+<text x="72" y="455" font-size="22" font-weight="700" fill="#a35b05" text-anchor="start" letter-spacing="0">03  Confirm the selected lock</text>
+<text x="72" y="485" font-size="19" font-weight="400" fill="#43566f" text-anchor="start" letter-spacing="0">The prompt names the lock before anything is sent.</text>
+<rect x="48" y="628" width="624" height="97" rx="18" fill="#fff" stroke="#dbe4ee"/>
+<rect x="48" y="647" width="5" height="59" rx="2" fill="#7145b7" stroke="none"/>
+<text x="72" y="662" font-size="22" font-weight="700" fill="#7145b7" text-anchor="start" letter-spacing="0">04  Call the HA service once</text>
+<text x="72" y="692" font-size="19" font-weight="400" fill="#43566f" text-anchor="start" letter-spacing="0">Selected entity only; no automatic retry.</text>
+<path d="M 360 728 V 750" fill="none" stroke="#7789a0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="48" y="760" width="624" height="97" rx="18" fill="#fff" stroke="#dbe4ee"/>
+<rect x="48" y="779" width="5" height="59" rx="2" fill="#237447" stroke="none"/>
+<text x="72" y="794" font-size="22" font-weight="700" fill="#237447" text-anchor="start" letter-spacing="0">05  Render the next HA state</text>
+<text x="72" y="824" font-size="19" font-weight="400" fill="#43566f" text-anchor="start" letter-spacing="0">Show reported state or a safe command error.</text>
+<path d="M 270 521 V 542" fill="none" stroke="#7789a0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="48" y="546" width="400" height="49" rx="12" fill="#fff3de" stroke="none"/>
+<text x="248" y="577" font-size="21" font-weight="650" fill="#a35b05" text-anchor="middle" letter-spacing="0">Cancel → no service call</text>
+<path d="M 560 521 V 618" fill="none" stroke="#7789a0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="580" y="574" font-size="17" font-weight="600" fill="#7145b7" text-anchor="start" letter-spacing="0">Confirm</text>
+<rect x="48" y="898" width="624" height="94" rx="16" fill="#fff" stroke="#dbe4ee"/>
+<text x="72" y="934" font-size="19" font-weight="400" fill="#43566f" text-anchor="start" letter-spacing="0">The card never connects to DESLOC cloud.</text>
+<text x="72" y="962" font-size="19" font-weight="400" fill="#43566f" text-anchor="start" letter-spacing="0">The integration owns cloud/device communication.</text>
+<text x="32" y="1012" font-size="16" font-weight="400" fill="#43566f" text-anchor="start" letter-spacing="0">Lock uses the HA service path without the Unlock confirmation.</text>
+</g>
+</svg>
