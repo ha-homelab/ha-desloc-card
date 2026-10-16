@@ -12,7 +12,7 @@
 ### Changed
 
 - Keep displayed text current when the HA profile language changes without modifying card configuration, user names, entity IDs, or pending commands.
-- Synchronize the development version banner with the 0.2.0 release line; release packaging continues to stamp the exact prerelease or stable version.
+- Synchronize the development version banner with the 0.2.0 package line. Release packaging stamps the planned package version; RC identity is recorded in the release manifest.
 
 ### Upgrade
 
