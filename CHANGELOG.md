@@ -22,6 +22,14 @@ manual JavaScript resource, then reload the browser. No integration update,
 account reauthentication, or YAML migration is required. The older screenshot
 walkthrough remains a historical view of the two-button interface.
 
+### Security
+
+Unlock requires a reported locked state and explicit confirmation naming the
+selected lock. A state or target change during a press or confirmation cancels
+that activation; it cannot substitute the opposite command. Pending actions
+block repeat commands. This release adds no device permissions, automatic
+actions, or retries. Reported state is not a door-open sensor.
+
 ## [0.2.0] - Development line
 
 ### Added
