@@ -2,7 +2,7 @@
 
 The card is a frontend for standard Home Assistant lock entities and optional
 battery/Wi-Fi sensors. Account authentication, device discovery, and cloud
-communication belong to the [DESLOC integration](https://github.com/ha-homelab/ha-desloc/blob/main/docs/how-it-works.md).
+communication belong to the [DESLOC integration](https://github.com/ha-homelab/ha-desloc#architecture).
 The card itself never receives DESLOC credentials or contacts the vendor cloud.
 
 [![Unlock flow: read HA state, check availability, confirm the selected lock, call its service once, and show the result](diagrams/interaction.svg)](diagrams/interaction.svg)

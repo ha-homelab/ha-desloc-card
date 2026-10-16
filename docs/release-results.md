@@ -62,7 +62,7 @@ rebuilding. Code, dependency, or packaging changes require a new RC.
 
 The [release strategy](../RELEASING.md) and [runbook](release-workflow.md) define
 the gates and commands. Publishing a release and installing it in HA are
-separate operations. The [integration's results](https://github.com/ha-homelab/ha-desloc/blob/main/docs/release-results.md)
+separate operations. The [integration's results](https://github.com/ha-homelab/ha-desloc/blob/d5c4bb6fda0c8b537722d5c66e783e1a634d25b6/docs/release-results.md)
 cover backend validation separately.
 
 ## Scope and future updates
