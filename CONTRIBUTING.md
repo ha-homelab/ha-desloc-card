@@ -61,3 +61,27 @@ strict modules and explicit interface types where TypeScript is used. Native
 C++ changes follow the surrounding ESPHome style, use explicit bounds and avoid
 unchecked pointer arithmetic. Do not reformat vendored code independently of
 its recorded upstream source. Existing exceptions must be explained in review.
+## Browser acceptance
+
+The required CI call runs real Chromium, Firefox and WebKit user flows on Linux,
+plus Chromium on Windows and WebKit on macOS. Nightly and beta qualification
+keep these five targets. RC qualification, scheduled audits and manual audits
+without a release channel expand to three locked browser generations and the
+installed Chrome/Edge Stable and Beta channels (35 targets total). Stable
+promotion reuses the accepted RC bytes; the shared release verdict binds each
+result to the source, channel, run and attempt. These checks
+use synthetic Home Assistant state; they do not connect to a real lock.
+
+`scripts/browser-acceptance.cjs` exercises the actual shadow DOM, confirmation
+dialogs, command suppression while pending, unavailable states, safe errors and
+manual retry, all 24 locales/RTL, text escaping and keyboard interaction. Each
+target preserves its actual browser version, completed scenario names and a
+screenshot. Missing or stale evidence fails the shared check. Playwright WebKit
+is not native Safari, and viewport tests are not real mobile-device acceptance.
+
+The separate `tools/browser-compatibility/` locks keep historical browser
+generations independent of application dependencies. Refresh their reviewed
+inventory using `scripts/prepare_browser_compatibility.py` from the pinned
+`venus-os-ci-toolkit` checkout, then qualify all targets; do not update all three
+toolchains to one version. The existing shared Renovate CI preset does not
+enable npm updates for these intentionally historical locks.
