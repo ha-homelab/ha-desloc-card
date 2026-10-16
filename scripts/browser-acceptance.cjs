@@ -170,9 +170,12 @@ async function main() {
     });
     await scenario('activate lock with Enter and Space without an unlock confirmation', async () => {
       await page.evaluate(() => updateState('unlocked'));
-      await action.focus();
-      await page.keyboard.press('Enter');
-      await page.keyboard.press('Space');
+      for (const key of ['Enter', 'Space']) {
+        // A completed command temporarily disables the button; some browsers blur it.
+        // Each independent keyboard activation starts with the action focused.
+        await action.focus();
+        await page.keyboard.press(key);
+      }
       assert.deepEqual(await page.evaluate(() => calls.slice(5)), [
         ['lock', 'lock', { entity_id: 'lock.fixture' }],
         ['lock', 'lock', { entity_id: 'lock.fixture' }],
