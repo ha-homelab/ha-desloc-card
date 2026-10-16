@@ -84,8 +84,22 @@ signal_entity: sensor.front_door_wi_fi_signal
 ```
 
 Use your actual entity IDs. Only `entity` is required; it must be a `lock` entity.
-`name`, `battery_entity`, and `signal_entity` are optional. Use a battery percentage
+`name`, `battery_entity`, `signal_entity`, and `language` are optional. Use a battery percentage
 sensor and RSSI sensor in dBm. Omit sensors that do not exist.
+
+## Languages
+
+The card and visual editor support 24 languages and follow your Home Assistant
+profile by default. Use **Language** in the editor or an optional `language: fr`
+in YAML to choose a different language for one card. Arabic, Hebrew, and Persian
+use right-to-left layout. Regional tags resolve to the matching pack; unsupported
+languages fall back to English. All translations ship in the single JS file.
+
+Changing language does not send commands or change lock names, entity IDs, or
+telemetry. Unlock confirmation and command errors use the selected language.
+See the [language guide](docs/i18n.md) for the complete list, fallback rules, and
+translation contributions. Documentation and the screenshot walkthrough remain
+in English.
 
 ## Behavior
 
@@ -118,7 +132,8 @@ flowchart TD
 ## Development
 
 Requires Node.js 24 or newer for the development workflow. The shipped JavaScript
-has no runtime dependencies and needs no build step.
+has no runtime dependencies. Normal installation needs no build step; translation
+contributors regenerate the checked-in dictionary with `node scripts/build-i18n.mjs`.
 
 ```sh
 npm ci --ignore-scripts
@@ -126,7 +141,8 @@ npm test
 ```
 
 Tests cover confirmation, duplicate clicks, failure behavior, unavailable states,
-safe rendering, and editor configuration. They mock HA; they do not operate a lock.
+safe rendering, editor configuration, and all 24 language packs. Translation
+contract tests also check the generated single-file bundle and placeholders. They mock HA; they do not operate a lock.
 Before a release, also check the card in Home Assistant on desktop and mobile sizes.
 The [RC fuzzing guide](docs/fuzzing.md) explains the isolated mutation targets,
 budgets and diagnostics; [release instructions](RELEASING.md) describe the
