@@ -64,9 +64,12 @@ its recorded upstream source. Existing exceptions must be explained in review.
 ## Browser acceptance
 
 The required CI call runs real Chromium, Firefox and WebKit user flows on Linux,
-plus Chromium on Windows and WebKit on macOS. Existing scheduled and manual
-release qualification expands to three locked browser generations and the
-installed Chrome/Edge Stable and Beta channels (35 targets total). These checks
+plus Chromium on Windows and WebKit on macOS. Nightly and beta qualification
+keep these five targets. RC qualification, scheduled audits and manual audits
+without a release channel expand to three locked browser generations and the
+installed Chrome/Edge Stable and Beta channels (35 targets total). Stable
+promotion reuses the accepted RC bytes; the shared release verdict binds each
+result to the source, channel, run and attempt. These checks
 use synthetic Home Assistant state; they do not connect to a real lock.
 
 `scripts/browser-acceptance.cjs` exercises the actual shadow DOM, confirmation
