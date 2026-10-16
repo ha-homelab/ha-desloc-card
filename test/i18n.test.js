@@ -124,3 +124,15 @@ test("legacy HA language property works and failure text updates on language cha
   card.hass = { ...card.hass, language: "uk" };
   assert.equal(card.shadowRoot.querySelector(".error").textContent, MESSAGES.uk["error.command"]);
 });
+test("invalid config types show localized validation while optional empty sensors remain valid", () => {
+  const { card } = setup("de");
+  for (const entity of [null, undefined, 123, {}, [], false]) {
+    assert.throws(() => card.setConfig({ entity }), { message: MESSAGES.de["error.lock_entity"] });
+  }
+  for (const field of ["battery_entity", "signal_entity"]) {
+    for (const value of [123, {}, [], true]) {
+      assert.throws(() => card.setConfig({ ...config, [field]: value }), { message: MESSAGES.de["error.sensor_entity"].replace("{field}", field) });
+    }
+    for (const value of [null, undefined, ""]) assert.doesNotThrow(() => card.setConfig({ ...config, [field]: value }));
+  }
+});
