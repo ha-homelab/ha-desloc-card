@@ -6,7 +6,7 @@
   "state.jammed": "卡住",
   "state.unknown": "未知",
   "state.unavailable": "不可用",
-  "caption": "锁上报的状态",
+  "caption": "上报的锁状态",
   "details": "显示锁的详细信息",
   "action.lock": "上锁",
   "action.unlock": "解锁",

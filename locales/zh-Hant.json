@@ -6,7 +6,7 @@
   "state.jammed": "卡住",
   "state.unknown": "未知",
   "state.unavailable": "無法使用",
-  "caption": "鎖回報的狀態",
+  "caption": "回報的鎖定狀態",
   "details": "顯示鎖的詳細資訊",
   "action.lock": "上鎖",
   "action.unlock": "解鎖",

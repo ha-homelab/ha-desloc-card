@@ -6,7 +6,7 @@
   "state.jammed": "ติดขัด",
   "state.unknown": "ไม่ทราบ",
   "state.unavailable": "ไม่พร้อมใช้งาน",
-  "caption": "สถานะที่ล็อกรายงาน",
+  "caption": "สถานะล็อกที่รายงาน",
   "details": "แสดงรายละเอียดล็อก",
   "action.lock": "ล็อก",
   "action.unlock": "ปลดล็อก",

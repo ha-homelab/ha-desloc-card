@@ -6,7 +6,7 @@
   "state.jammed": "আটকে গেছে",
   "state.unknown": "অজানা",
   "state.unavailable": "অনুপলব্ধ",
-  "caption": "লকের জানানো অবস্থা",
+  "caption": "রিপোর্ট করা লক অবস্থা",
   "details": "লকের বিবরণ দেখুন",
   "action.lock": "তালা লাগান",
   "action.unlock": "তালা খুলুন",

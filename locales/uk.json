@@ -6,7 +6,7 @@
   "state.jammed": "Заклинило",
   "state.unknown": "Невідомо",
   "state.unavailable": "Недоступно",
-  "caption": "Стан, повідомлений замком",
+  "caption": "Повідомлений стан замка",
   "details": "Показати відомості про замок",
   "action.lock": "Заблокувати",
   "action.unlock": "Розблокувати",
