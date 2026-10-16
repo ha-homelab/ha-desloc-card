@@ -5,6 +5,15 @@ on:
 permissions:
   contents: read
 jobs:
+  browser-compatibility:
+    uses: victron-venus/venus-os-ci-toolkit/.github/workflows/typescript-ci.yml@b071472a0d83cc8d049c4df00451bc291a7c1571
+    with:
+      node-version: '24'
+      run-node-ci: false
+      browser-matrix-file: .github/browser-compatibility.json
+      browser-prepare-command: npm ci --ignore-scripts
+      browser-test-command: node scripts/browser-acceptance.cjs
+      browser-extended: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
   tests:
     runs-on: ubuntu-latest
     timeout-minutes: 10
