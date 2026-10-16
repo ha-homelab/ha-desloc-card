@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { DeslocLockCard, input, window } from './dom.mjs';
+import { DeslocLockCard, LOCALES, MESSAGES, input, window } from './dom.mjs';
 
 const card = new DeslocLockCard();
 
@@ -7,6 +7,7 @@ export async function fuzz(data) {
   const sample = input(data);
   if (!sample) return;
   const { flags, text, state } = sample;
+  const { code: language } = LOCALES[flags % LOCALES.length];
   const service = ['lock', 'unlock', text][flags % 3];
   const confirmation = Boolean(flags & 4);
   const busy = Boolean(flags & 8);
@@ -16,9 +17,14 @@ export async function fuzz(data) {
   card.hass = undefined;
   card._error = '';
   card.setConfig({ entity: 'lock.synthetic', name: text });
-  window.confirm = () => { prompts += 1; return confirmation; };
+  window.confirm = message => {
+    prompts += 1;
+    assert.equal(message, MESSAGES[language]['confirm.unlock'].replace('{name}', () => text || 'lock.synthetic'));
+    return confirmation;
+  };
   card._busy = busy;
   card.hass = {
+    locale: { language },
     states: { 'lock.synthetic': { state, attributes: {} } },
     callService: async (...args) => {
       calls.push(args);

@@ -1,5 +1,34 @@
 # Changelog
 
+## [0.2.0] - Development line
+
+### Added
+
+- Translate the card and visual editor into 24 languages, following the Home Assistant profile by default with an optional per-card override.
+- Include translated states, telemetry, commands, physical-unlock confirmation, safe failure messages, configuration validation, and accessibility labels.
+- Support regional language tags, English fallback, and right-to-left Arabic, Hebrew, and Persian layouts.
+- Bundle all translations offline in the existing HACS JavaScript asset, with complete-key and placeholder checks and language-aware safety tests.
+
+### Changed
+
+- Keep displayed text current when the HA profile language changes without modifying card configuration, user names, entity IDs, or pending commands.
+- Synchronize the development version banner with the 0.2.0 release line; release packaging continues to stamp the exact prerelease or stable version.
+
+### Upgrade
+
+Use the existing HACS custom repository or manual installation procedure and
+reload the browser. Existing configuration works unchanged. Set **Language** in
+the visual editor only when a card should differ from the HA profile. No extra
+resource files, translation service, or migration are required. This release
+candidate is an opt-in preview; native-speaker corrections are welcome.
+
+### Security
+
+Language changes never send commands or clear pending-command gates. Unlock
+still requires a reported locked state and an explicit confirmation naming the
+selected lock. Translations and names render as text, and raw service errors
+remain hidden. Synthetic tests do not establish physical lock acceptance.
+
 ## [0.1.5] - Development line
 
 ### Changed
