@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.3.1] - 2026-10-17
+
+### Changed
+
+- Link the illustrated release-candidate fuzzing process and validation results from the project documentation.
+- Keep this documentation maintenance release aligned with the declared package and npm lockfile versions.
+
+### Upgrade
+
+Update the card through the existing HACS or manual resource procedure and reload the browser. The single-action lock interface and all configuration remain unchanged. Keep the previous package for rollback.
+
+### Security
+
+This release does not change service-call permissions or unlock confirmation. Browser and fuzzing checks use synthetic entities and do not operate a physical lock.
+
 ## [0.3.0] - 2026-10-16
 
 ### Changed
