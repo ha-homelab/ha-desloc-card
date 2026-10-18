@@ -22,7 +22,7 @@ The card uses Home Assistant entities and actions; it never receives DESLOC
 credentials or connects directly to the vendor cloud. It can also display other
 standard HA lock entities, but their behavior depends on the underlying integration.
 
-[![DESLOC lock card in perspective](docs/images/desloc-card-hero.png)](docs/images/lock-card-locked.jpg)
+<a href="docs/images/lock-card-locked.jpg"><img src="docs/images/desloc-card-hero.png" width="600" alt="DESLOC lock card in perspective"></a>
 
 Historical card **0.1.1** screenshot; current versions use one adaptive action button.
 Click for the unchanged readable original. [Animated walkthrough](docs/media/desloc-overview.gif).
