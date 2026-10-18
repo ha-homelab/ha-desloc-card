@@ -9,11 +9,11 @@ command -v magick >/dev/null 2>&1 || { printf '%s\n' 'ImageMagick 7 is required.
 render_dir="$(mktemp -d "${TMPDIR:-/tmp}/docs-hero.XXXXXX")"
 trap 'rm -rf -- "$render_dir"' EXIT
 magick "$source_image" -alpha on -virtual-pixel transparent -filter Robidoux \
-  -define distort:viewport=1540x1100+0+0 -distort Perspective '0,0 302,260 492,0 1178,190 492,404 1228,885 0,404 362,1000' \
+  -define distort:viewport=900x640+0+0 -distort Perspective '0,0 180,135 492,0 675,95 492,404 705,488 0,404 210,540' \
   -strip "$render_dir/panel.png"
 magick "$render_dir/panel.png" -fill '#152033' -colorize 100 \
   -channel A -evaluate multiply 0.22 +channel -blur 0x18 -strip "$render_dir/shadow.png"
-magick -size 1540x1100 xc:'#f0f1f3' \
+magick -size 900x640 xc:'#f0f1f3' \
   "$render_dir/shadow.png" -geometry +0+22 -compose Over -composite \
   "$render_dir/panel.png" -geometry +0+0 -compose Over -composite \
   -strip -define png:exclude-chunk=date,time "PNG24:$render_dir/hero.png"
