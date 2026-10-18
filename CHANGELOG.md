@@ -4,6 +4,7 @@
 
 ### Changed
 
+- Replace the obsolete Scorecard CI container with the reviewed, checksum-pinned scanner. Keep the upstream SARIF reporting policy, GitHub Security upload and retained report artifacts.
 - Refresh pinned review and release-candidate fuzz workflows. Dashboard interactions and lock service calls are unchanged.
 
 ### Upgrade
@@ -11,6 +12,8 @@
 Update through HACS or replace the verified JavaScript resource, then reload the dashboard. Preserve the previous resource and card configuration for rollback.
 
 ### Security
+
+The replaced CI image contained 25 high-severity dependency findings in the recorded scan. The scanner replacement changes CI tooling, not the distributed application runtime. OpenSSF REST publication remains disabled as before.
 
 Publication and synthetic UI checks do not operate a physical lock.
 
