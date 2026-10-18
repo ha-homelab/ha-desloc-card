@@ -22,7 +22,10 @@ The card uses Home Assistant entities and actions; it never receives DESLOC
 credentials or connects directly to the vendor cloud. It can also display other
 standard HA lock entities, but their behavior depends on the underlying integration.
 
-![Looping screenshot walkthrough of DESLOC setup, lock discovery, dashboard card, visual editor, and PIN-user form](docs/media/desloc-overview.gif)
+[![DESLOC lock card in perspective](docs/images/desloc-card-hero.png)](docs/images/lock-card-locked.jpg)
+
+Historical card **0.1.1** screenshot; current versions use one adaptive action button.
+Click for the unchanged readable original. [Animated walkthrough](docs/media/desloc-overview.gif).
 
 A looping 30-second English walkthrough of the companion integration and card,
 made from actual UI screenshots in Home Assistant 2026.9.1 with integration 0.3.0
@@ -188,3 +191,9 @@ and the [OpenSSF evidence and remaining criteria](docs/openssf-evidence.md).
 [Contribute](CONTRIBUTING.md) · [Governance](GOVERNANCE.md) ·
 [Code of Conduct](CODE_OF_CONDUCT.md) · [Roadmap](ROADMAP.md) ·
 [Quality and assessment scope](docs/quality.md)
+
+## Screenshot artwork
+
+Regenerate the perspective cover with `bash scripts/render-docs-hero.sh`
+(ImageMagick 7). It preserves the original screenshot and only adds a geometric
+projection and shadow. The linked flat image remains the readable reference.
