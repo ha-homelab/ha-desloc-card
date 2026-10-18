@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.3.2] - 2026-10-18
+
+### Changed
+
+- Refresh pinned review and release-candidate fuzz workflows. Dashboard interactions and lock service calls are unchanged.
+
+### Upgrade
+
+Update through HACS or replace the verified JavaScript resource, then reload the dashboard. Preserve the previous resource and card configuration for rollback.
+
+### Security
+
+Publication and synthetic UI checks do not operate a physical lock.
+
 ## [0.3.1] - 2026-10-17
 
 ### Changed
