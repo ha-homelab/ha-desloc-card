@@ -16,7 +16,10 @@ DESLOC account. C100 Plus is maintainer-tested. D110 Plus has a
 [general working report](https://github.com/home-assistant/feature-requests/discussions/2138#discussioncomment-18702050)
 and a [second report that also confirms PIN functionality](https://github.com/home-assistant/feature-requests/discussions/2138#discussioncomment-18706123),
 both from October 1, 2026. The PIN report does not describe its creation workflow,
-keypad testing, or firmware version. Other models remain experimental. See the integration's
+keypad testing, or firmware version. A [K120 owner also reported working
+integration and the entities used by this card](https://community.home-assistant.io/t/desloc-smart-locks-custom-integration-and-dashboard-card-model-compatibility-reports/1027056/2),
+without separate lock/unlock or PIN test details. Models without maintainer
+validation retain their experimental runtime label. See the integration's
 [compatibility notes](https://github.com/ha-homelab/ha-desloc/blob/main/docs/compatibility.md).
 The card uses Home Assistant entities and actions; it never receives DESLOC
 credentials or connects directly to the vendor cloud. It can also display other
@@ -40,11 +43,12 @@ with one button that offers the action appropriate to the reported state.
 
 ## Install through HACS
 
-**Not yet published in the default HACS catalog.** Add the repository manually;
+**The card is not yet published in the default HACS catalog.** Add its repository manually;
 the [catalog submission](https://github.com/hacs/default/pull/11473) is pending
 review and has not been accepted. The card and integration
 are separate repositories: install the [DESLOC integration](https://github.com/ha-homelab/ha-desloc#installation)
-first if you do not already have a lock entity.
+first if you do not already have a lock entity. The integration is already in
+the default catalog: search for **DESLOC** in HACS to install it.
 
 1. Add `https://github.com/ha-homelab/ha-desloc-card` to HACS **Custom repositories**,
    type **Dashboard** (called **Plugin** in some versions).
