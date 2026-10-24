@@ -27,7 +27,16 @@ The README uses a [looping GIF](media/desloc-overview.gif) of the same 30-second
 screenshot sequence. The MP4, text synopsis below, and static screenshots remain
 available as alternatives to the animation.
 
-The six scenes, in order:
+The captions describe the project at recording time. Both projects are now in
+the default HACS catalog: search for **DESLOC** for the integration and
+**DESLOC Lock Card** for the separate dashboard card. Use the current
+[installation instructions](../README.md#install-through-hacs). A later
+[D110 Plus report includes PIN functionality](https://github.com/home-assistant/feature-requests/discussions/2138#discussioncomment-18706123),
+and a [K120 owner reported working integration and available card entities](https://community.home-assistant.io/t/desloc-smart-locks-custom-integration-and-dashboard-card-model-compatibility-reports/1027056/2).
+See the current [compatibility notes](https://github.com/ha-homelab/ha-desloc/blob/main/docs/compatibility.md)
+for the scope of each report.
+
+The six historical scenes, in order:
 
 1. **Set up DESLOC:** choose email sign-in or an existing app session. A new
    sign-in can invalidate the phone app session.
@@ -41,13 +50,14 @@ The six scenes, in order:
 5. **Add a permanent PIN user:** open Settings → Devices & services → DESLOC →
    Configure. The displayed form is empty; submitting it creates permanent access.
    Permanent PIN creation was physically tested on C100 Plus. D110 Plus PIN
-   testing has not been reported.
+   testing had not been reported when these captions were written.
 6. **Find the projects:** C100 Plus is maintainer-tested; D110 Plus is
    community-reported working. Other models remain experimental. The unofficial
    [cloud integration](https://github.com/ha-homelab/ha-desloc) and optional
    [dashboard card](https://github.com/ha-homelab/ha-desloc-card) are separate
-   repositories. Install them through HACS custom repositories while their
-   catalog submissions await review.
+   repositories. At recording time both used HACS custom repositories while
+   their catalog submissions awaited review; use the current installation
+   instructions above.
 
 ## Reported locked state
 
@@ -70,6 +80,6 @@ preview shows the resulting card beside the form.
 This image is preserved from an earlier capture. It illustrates the reported
 Unlocked appearance and does not describe the lock's current state.
 
-For installation, use the [README](../README.md). The card's
-[HACS catalog submission](https://github.com/hacs/default/pull/11473) is pending;
-install it as a custom repository until it is accepted.
+For installation, use the [README](../README.md#install-through-hacs). The card's
+[HACS catalog submission](https://github.com/hacs/default/pull/11473) was accepted
+on October 24, 2026; search for **DESLOC Lock Card** in HACS.
