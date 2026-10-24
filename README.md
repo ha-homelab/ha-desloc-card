@@ -43,19 +43,18 @@ with one button that offers the action appropriate to the reported state.
 
 ## Install through HACS
 
-**The card is not yet published in the default HACS catalog.** Add its repository manually;
-the [catalog submission](https://github.com/hacs/default/pull/11473) is pending
-review and has not been accepted. The card and integration
-are separate repositories: install the [DESLOC integration](https://github.com/ha-homelab/ha-desloc#installation)
-first if you do not already have a lock entity. The integration is already in
-the default catalog: search for **DESLOC** in HACS to install it.
+The card is included in the default HACS catalog; its
+[submission was accepted on October 24, 2026](https://github.com/hacs/default/pull/11473).
 
-1. Add `https://github.com/ha-homelab/ha-desloc-card` to HACS **Custom repositories**,
-   type **Dashboard** (called **Plugin** in some versions).
+1. Open **HACS** and search for **DESLOC Lock Card**.
 2. Download the latest stable release of **DESLOC Lock Card** (not `main` or a
    prerelease) and reload the browser.
 3. Edit a dashboard, add **DESLOC Lock Card**, and select the lock and optional
    battery/Wi-Fi sensors in the visual editor.
+
+The card and integration are separate repositories. If you do not already have
+a lock entity, first install the [DESLOC integration](https://github.com/ha-homelab/ha-desloc#installation)
+by searching for **DESLOC** in HACS and complete its setup.
 
 Home Assistant 2026.9.1 is the tested baseline.
 
@@ -63,6 +62,13 @@ If HACS does not register a resource automatically, add
 `/hacsfiles/ha-desloc-card/ha-desloc-card.js` as a **JavaScript module** under
 **Settings → Dashboards → ⋮ → Resources**. Enable **Advanced mode** in your
 HA profile if the resources menu is hidden.
+
+### Custom repository fallback
+
+If the card does not appear in your HACS catalog, add
+`https://github.com/ha-homelab/ha-desloc-card` under **HACS → Custom repositories**,
+type **Dashboard** (called **Plugin** in some versions). Then download the latest
+stable release and follow the browser reload and dashboard setup steps above.
 
 ## Manual installation without HACS
 

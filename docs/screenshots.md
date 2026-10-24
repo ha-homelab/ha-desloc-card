@@ -27,9 +27,10 @@ The README uses a [looping GIF](media/desloc-overview.gif) of the same 30-second
 screenshot sequence. The MP4, text synopsis below, and static screenshots remain
 available as alternatives to the animation.
 
-The captions describe the project at recording time. The integration is now in
-the default HACS catalog: search for **DESLOC** to install it. The separate card
-still uses a custom repository while its own submission awaits review. A later
+The captions describe the project at recording time. Both projects are now in
+the default HACS catalog: search for **DESLOC** for the integration and
+**DESLOC Lock Card** for the separate dashboard card. Use the current
+[installation instructions](../README.md#install-through-hacs). A later
 [D110 Plus report includes PIN functionality](https://github.com/home-assistant/feature-requests/discussions/2138#discussioncomment-18706123),
 and a [K120 owner reported working integration and available card entities](https://community.home-assistant.io/t/desloc-smart-locks-custom-integration-and-dashboard-card-model-compatibility-reports/1027056/2).
 See the current [compatibility notes](https://github.com/ha-homelab/ha-desloc/blob/main/docs/compatibility.md)
@@ -79,6 +80,6 @@ preview shows the resulting card beside the form.
 This image is preserved from an earlier capture. It illustrates the reported
 Unlocked appearance and does not describe the lock's current state.
 
-For installation, use the [README](../README.md). The card's
-[HACS catalog submission](https://github.com/hacs/default/pull/11473) is pending;
-install it as a custom repository until it is accepted.
+For installation, use the [README](../README.md#install-through-hacs). The card's
+[HACS catalog submission](https://github.com/hacs/default/pull/11473) was accepted
+on October 24, 2026; search for **DESLOC Lock Card** in HACS.
