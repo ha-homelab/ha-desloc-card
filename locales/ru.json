@@ -22,5 +22,8 @@
   "editor.signal_entity": "Датчик сигнала Wi-Fi (необязательно)",
   "editor.language": "Язык",
   "editor.automatic": "Использовать язык Home Assistant",
-  "description": "Управление замком, сообщённое состояние, батарея и сигнал Wi-Fi."
+  "description": "Управление замком, сообщённое состояние, батарея и сигнал Wi-Fi.",
+  "editor.compact": "Компактный вид",
+  "error.compact": "Значение компактного режима должно быть true или false.",
+  "description.compact": "Компактное управление замком, состояние, заряд и Wi-Fi."
 }

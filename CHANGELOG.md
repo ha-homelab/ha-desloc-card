@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.4.0] - Beta
+
+### Added
+
+- Add a compact layout with the lock name, reported state, optional battery/Wi-Fi readings, details, and one adaptive action button.
+- Add a **Compact layout** toggle to the visual editor and the optional `compact` YAML setting. Existing cards keep their full layout by default.
+- Include **DESLOC Compact Lock Card** in the dashboard card picker as `custom:desloc-compact-lock-card`. Both variants use the same HACS package and JavaScript resource.
+- Translate compact-layout settings and the compact picker description into all 24 supported languages; support narrow dashboards and right-to-left layouts.
+
+### Upgrade
+
+This is an opt-in beta. Select the latest 0.4.0 beta in HACS and reload the browser.
+Enable **Compact layout** on an existing card, or add **DESLOC Compact Lock Card**.
+No integration update, extra resource, or reauthentication is required. Before
+rolling back to 0.3.x, change compact card types to `custom:desloc-lock-card` and
+remove the `compact` option.
+
+### Security
+
+Both layouts share the existing command handling: explicit unlock confirmation,
+state and target rechecks, pending-command protection, and no automatic retries.
+Changing the layout never sends a lock command. Automated browser checks use
+synthetic entities and do not operate a physical lock.
+
 ## [0.3.2] - 2026-10-18
 
 ### Changed

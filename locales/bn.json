@@ -22,5 +22,8 @@
   "editor.signal_entity": "Wi-Fi সিগন্যাল সেন্সর (ঐচ্ছিক)",
   "editor.language": "ভাষা",
   "editor.automatic": "Home Assistant-এর ভাষা ব্যবহার করুন",
-  "description": "লক নিয়ন্ত্রণ, জানানো অবস্থা, ব্যাটারি ও Wi-Fi সিগন্যাল।"
+  "description": "লক নিয়ন্ত্রণ, জানানো অবস্থা, ব্যাটারি ও Wi-Fi সিগন্যাল।",
+  "editor.compact": "সংক্ষিপ্ত বিন্যাস",
+  "error.compact": "সংক্ষিপ্ত মোডের মান true অথবা false হতে হবে।",
+  "description.compact": "সংক্ষিপ্ত লক নিয়ন্ত্রণ, অবস্থা, ব্যাটারি ও Wi-Fi।"
 }

@@ -22,5 +22,8 @@
   "editor.signal_entity": "Wi-Fi signal sensor (optional)",
   "editor.language": "Language",
   "editor.automatic": "Use Home Assistant language",
-  "description": "Lock control, reported state, battery and Wi-Fi signal."
+  "description": "Lock control, reported state, battery and Wi-Fi signal.",
+  "editor.compact": "Compact layout",
+  "error.compact": "Compact mode must be true or false.",
+  "description.compact": "Compact lock controls, state, battery and Wi-Fi."
 }

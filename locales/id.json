@@ -22,5 +22,8 @@
   "editor.signal_entity": "Sensor sinyal Wi-Fi (opsional)",
   "editor.language": "Bahasa",
   "editor.automatic": "Gunakan bahasa Home Assistant",
-  "description": "Kontrol kunci, status yang dilaporkan, baterai, dan sinyal Wi-Fi."
+  "description": "Kontrol kunci, status yang dilaporkan, baterai, dan sinyal Wi-Fi.",
+  "editor.compact": "Tata letak ringkas",
+  "error.compact": "Mode ringkas harus bernilai true atau false.",
+  "description.compact": "Kontrol kunci ringkas, status, baterai, dan Wi-Fi."
 }

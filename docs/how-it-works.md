@@ -5,6 +5,18 @@ battery/Wi-Fi sensors. Account authentication, device discovery, and cloud
 communication belong to the [DESLOC integration](https://github.com/ha-homelab/ha-desloc#architecture).
 The card itself never receives DESLOC credentials or contacts the vendor cloud.
 
+## Two layouts, one installation
+
+The full card and compact card share the same renderer, editor, and command
+handling in `ha-desloc-card.js`. The `compact` setting changes their presentation
+and suggested dashboard size. It never triggers a service call.
+
+Existing `custom:desloc-lock-card` configurations keep the full layout unless
+`compact: true` is set. The `custom:desloc-compact-lock-card` picker option starts
+compact by default; an explicit `compact: false` switches it to the full layout.
+Both offer the same state-dependent action and unlock confirmation. Optional
+sensor readings remain available in the compact layout.
+
 [![Unlock flow: read HA state, check availability, confirm the selected lock, call its service once, and show the result](diagrams/interaction.svg)](diagrams/interaction.svg)
 
 ## From a click to the reported result

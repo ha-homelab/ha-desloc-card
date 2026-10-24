@@ -22,5 +22,8 @@
   "editor.signal_entity": "Capteur de signal Wi-Fi (facultatif)",
   "editor.language": "Langue",
   "editor.automatic": "Utiliser la langue de Home Assistant",
-  "description": "Commande de serrure, état signalé, batterie et signal Wi-Fi."
+  "description": "Commande de serrure, état signalé, batterie et signal Wi-Fi.",
+  "editor.compact": "Disposition compacte",
+  "error.compact": "Le mode compact doit être true ou false.",
+  "description.compact": "Commandes compactes de serrure, état, batterie et Wi-Fi."
 }

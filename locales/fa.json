@@ -22,5 +22,8 @@
   "editor.signal_entity": "حسگر سیگنال Wi-Fi (اختیاری)",
   "editor.language": "زبان",
   "editor.automatic": "استفاده از زبان Home Assistant",
-  "description": "کنترل قفل، وضعیت گزارش‌شده، باتری و سیگنال Wi-Fi."
+  "description": "کنترل قفل، وضعیت گزارش‌شده، باتری و سیگنال Wi-Fi.",
+  "editor.compact": "چیدمان فشرده",
+  "error.compact": "مقدار حالت فشرده باید true یا false باشد.",
+  "description.compact": "کنترل فشردهٔ قفل، وضعیت، باتری و Wi-Fi."
 }

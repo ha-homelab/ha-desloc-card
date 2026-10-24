@@ -22,5 +22,8 @@
   "editor.signal_entity": "Senzor signálu Wi-Fi (volitelný)",
   "editor.language": "Jazyk",
   "editor.automatic": "Použít jazyk Home Assistant",
-  "description": "Ovládání zámku, hlášený stav, baterie a signál Wi-Fi."
+  "description": "Ovládání zámku, hlášený stav, baterie a signál Wi-Fi.",
+  "editor.compact": "Kompaktní rozložení",
+  "error.compact": "Kompaktní režim musí mít hodnotu true nebo false.",
+  "description.compact": "Kompaktní ovládání zámku, stav, baterie a Wi-Fi."
 }

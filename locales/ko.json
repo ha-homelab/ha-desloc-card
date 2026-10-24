@@ -22,5 +22,8 @@
   "editor.signal_entity": "Wi-Fi 신호 센서(선택 사항)",
   "editor.language": "언어",
   "editor.automatic": "Home Assistant 언어 사용",
-  "description": "잠금 제어, 보고된 상태, 배터리 및 Wi-Fi 신호."
+  "description": "잠금 제어, 보고된 상태, 배터리 및 Wi-Fi 신호.",
+  "editor.compact": "간결한 레이아웃",
+  "error.compact": "간결한 모드는 true 또는 false여야 합니다.",
+  "description.compact": "간결한 잠금 제어, 상태, 배터리 및 Wi-Fi."
 }

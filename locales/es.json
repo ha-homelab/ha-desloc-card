@@ -22,5 +22,8 @@
   "editor.signal_entity": "Sensor de señal Wi-Fi (opcional)",
   "editor.language": "Idioma",
   "editor.automatic": "Usar el idioma de Home Assistant",
-  "description": "Control de la cerradura, estado comunicado, batería y señal Wi-Fi."
+  "description": "Control de la cerradura, estado comunicado, batería y señal Wi-Fi.",
+  "editor.compact": "Diseño compacto",
+  "error.compact": "El modo compacto debe ser true o false.",
+  "description.compact": "Controles compactos de cerradura, estado, batería y Wi-Fi."
 }

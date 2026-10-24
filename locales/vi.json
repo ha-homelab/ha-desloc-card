@@ -22,5 +22,8 @@
   "editor.signal_entity": "Cảm biến tín hiệu Wi-Fi (tùy chọn)",
   "editor.language": "Ngôn ngữ",
   "editor.automatic": "Sử dụng ngôn ngữ của Home Assistant",
-  "description": "Điều khiển khóa, trạng thái báo cáo, pin và tín hiệu Wi-Fi."
+  "description": "Điều khiển khóa, trạng thái báo cáo, pin và tín hiệu Wi-Fi.",
+  "editor.compact": "Bố cục gọn",
+  "error.compact": "Chế độ gọn phải là true hoặc false.",
+  "description.compact": "Điều khiển khóa gọn, trạng thái, pin và Wi-Fi."
 }
