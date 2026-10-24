@@ -407,6 +407,64 @@ async function main() {
       assert.equal(await feedback.textContent(), '');
       assert.equal(await page.evaluate(() => calls.length), before + 1, 'recovery did not replay the command');
     });
+    await scenario('center a loading ring through pending requests in both layouts and respect reduced motion', async () => {
+      await page.setViewportSize({ width: 320, height: 844 });
+      for (const type of ['desloc-lock-card', 'desloc-compact-lock-card']) {
+        await page.emulateMedia({ reducedMotion: 'no-preference' });
+        await page.evaluate(type => {
+          card.remove();
+          window.card = document.createElement(type);
+          card.setConfig({ entity: 'lock.fixture', name: 'Synthetic door', language: 'en' });
+          hass.callService = async (...args) => {
+            calls.push(args);
+            await new Promise(resolve => window.resolveCommand = resolve);
+          };
+          updateState('unlocked');
+          document.body.append(card);
+        }, type);
+        const button = page.locator(type).locator('.action');
+        const before = await page.evaluate(() => calls.length);
+        await button.click();
+        assert.equal(await button.getAttribute('aria-busy'), 'true');
+        assert.equal(await button.textContent(), 'Locking…', 'localized accessible name is retained');
+        assert.equal(await button.isDisabled(), true);
+        const ring = await button.evaluate(button => {
+          const style = getComputedStyle(button, '::after');
+          return {
+            content: style.content, width: style.width, height: style.height,
+            left: parseFloat(style.left), top: parseFloat(style.top),
+            centerX: button.clientWidth / 2, centerY: button.clientHeight / 2,
+            animation: style.animationName, opacity: getComputedStyle(button).opacity,
+          };
+        });
+        assert.equal(ring.content, '""');
+        assert.equal(ring.width, '22px');
+        assert.equal(ring.height, '22px');
+        assert.ok(Math.abs(ring.left - ring.centerX) <= 1 && Math.abs(ring.top - ring.centerY) <= 1,
+          `${type}: ring stays centered on a narrow card`);
+        assert.equal(ring.animation, 'desloc-spin');
+        assert.equal(ring.opacity, '1', 'pending ring stays visible on the disabled button');
+        await page.screenshot({ path: path.join(output, `${type}-loading.png`), fullPage: true });
+        await page.emulateMedia({ reducedMotion: 'reduce' });
+        assert.equal(await button.evaluate(button => getComputedStyle(button, '::after').animationName), 'none');
+        assert.equal(await button.evaluate(button => getComputedStyle(button, '::after').content), '""');
+        const bounds = await button.boundingBox();
+        await page.emulateMedia({ reducedMotion: 'no-preference' });
+        assert.deepEqual(await button.boundingBox(), bounds, 'motion preferences do not resize the control');
+        await page.evaluate(() => { updateState('locked'); card.shadowRoot.querySelector('.action').click(); });
+        assert.equal(await button.getAttribute('aria-busy'), 'true', 'early state must not clear an outstanding request');
+        assert.equal(await page.evaluate(() => calls.length), before + 1, 'pending clicks never duplicate a request');
+        await page.evaluate(() => resolveCommand());
+        await page.waitForFunction(() => card.shadowRoot.querySelector('.action').getAttribute('aria-busy') === 'false');
+        assert.equal(await button.evaluate(button => getComputedStyle(button, '::after').content), 'none');
+        for (const [state, busy] of [['locking', true], ['unlocking', true], ['unknown', false], ['unavailable', false]]) {
+          await page.evaluate(state => updateState(state), state);
+          assert.equal(await button.getAttribute('aria-busy'), String(busy));
+          assert.equal(await button.evaluate(button => getComputedStyle(button, '::after').content), busy ? '""' : 'none');
+        }
+      }
+      await page.evaluate(() => updateState('locked'));
+    });
     await scenario('detached estimates balance a synthetic two-column Masonry fixture before rendering', async () => {
       await page.setViewportSize({ width: 760, height: 1000 });
       const masonry = await page.evaluate(() => {

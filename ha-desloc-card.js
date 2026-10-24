@@ -73,6 +73,9 @@ export class DeslocLockCard extends HTMLElement {
         button { overflow-wrap: anywhere; font: inherit; cursor: pointer; border-radius: 12px; min-height: 46px; border: 1px solid var(--divider-color); color: var(--primary-text-color); background: transparent; padding: 10px 16px; }
         button.primary { color: var(--text-primary-color, #fff); background: var(--primary-color); border-color: var(--primary-color); }
         button:disabled { cursor: default; opacity: .45; }
+        .action { position: relative; }
+        .action[aria-busy="true"] { color: transparent; cursor: progress; opacity: 1; }
+        .action[aria-busy="true"]::after { content: ""; position: absolute; top: 50%; left: 50%; width: 22px; height: 22px; box-sizing: border-box; border: 3px solid color-mix(in srgb, var(--text-primary-color, #fff) 30%, transparent); border-top-color: var(--text-primary-color, #fff); border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; }
         button:focus-visible { outline: 3px solid var(--primary-color); outline-offset: 3px; }
         button.info { border: 0; min-width: 44px; padding: 8px; }
         .error { color: var(--error-color, #db4437); font-size: 13px; margin-top: 14px; overflow-wrap: anywhere; }
@@ -99,7 +102,11 @@ export class DeslocLockCard extends HTMLElement {
           [data-compact] .actions { grid-column: 1 / -1; grid-row: 4; max-width: none; margin-top: 8px; }
           [data-compact] .error { grid-row: 5; }
         }
-        @media (prefers-reduced-motion: no-preference) { .disc { transition: background .2s; } }
+        @keyframes desloc-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+        @media (prefers-reduced-motion: no-preference) {
+          .disc { transition: background .2s; }
+          .action[aria-busy="true"]::after { animation: desloc-spin .8s linear infinite; }
+        }
       </style>
       <ha-card>
         <header><div><h2></h2><p class="caption">Reported lock state</p></div><button class="info" aria-label="Show lock details"><ha-icon icon="mdi:information-outline"></ha-icon></button></header>

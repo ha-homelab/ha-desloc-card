@@ -160,8 +160,11 @@ in English.
   name, then the entity's current friendly name, then its entity ID.
 - The caption says **Reported lock state** for every entity; it does not infer a
   vendor or cloud connection from the entity ID or name.
-- During a request or state transition, the button shows **Locking…** or
-  **Unlocking…** and is disabled, even if HA reports the target state early.
+- During a request or state transition, a centered loading ring replaces the
+  button text and the button stays disabled, even if HA reports the target state
+  early. Its accessible label remains **Locking…** or **Unlocking…**. The ring is
+  static when reduced motion is enabled, and indicates waiting rather than
+  successful physical operation. This works in both full and compact layouts.
 - Unknown, jammed, and unrecognized states retain an explicit **Lock** action
   for manual recovery, but never Unlock. No action is sent merely because the
   state or button label changes.
