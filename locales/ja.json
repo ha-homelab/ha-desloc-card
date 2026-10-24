@@ -25,5 +25,10 @@
   "description": "錠の操作、報告された状態、バッテリー、Wi-Fi 信号。",
   "editor.compact": "コンパクトなレイアウト",
   "error.compact": "コンパクトモードには true または false を指定してください。",
-  "description.compact": "コンパクトな錠の操作、状態、バッテリー、Wi-Fi。"
+  "description.compact": "コンパクトな錠の操作、状態、バッテリー、Wi-Fi。",
+  "error.command_timeout": "DESLOCコマンドの確認がタイムアウトしました。再試行前に錠を確認してください。",
+  "error.command_unconfirmed": "DESLOCがコマンドを受け付けましたが、新しい錠の状態は未確認です。再試行前に錠を確認してください。",
+  "error.auth_required": "DESLOCの認証に対応が必要です。Home Assistantで再認証してください。",
+  "error.unavailable": "錠のインテグレーションを利用できません。変更は試みていません。まず接続を復旧してください。",
+  "error.command_in_progress": "この錠では別のコマンドを実行中です。変更は試みていません。完了してから新しいリクエストを開始してください。"
 }

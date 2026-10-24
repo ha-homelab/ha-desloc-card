@@ -9,6 +9,11 @@
 - Include **DESLOC Compact Lock Card** in the dashboard card picker as `custom:desloc-compact-lock-card`. Both variants use the same HACS package and JavaScript resource.
 - Translate compact-layout settings and the compact picker description into all 24 supported languages; support narrow dashboards and right-to-left layouts.
 
+### Fixed
+
+- Display specific localized timeout, state-confirmation, authentication, unavailable-status, and busy messages when the DESLOC integration supplies a recognized error code. Unknown errors retain the generic message; raw server text is never displayed.
+- Clear a recognized command error after a subsequent uncertain-to-stable HA state transition with a newer state timestamp. Sensor-only updates do not dismiss the error or imply command success.
+
 ### Upgrade
 
 This is an opt-in beta. Select the latest 0.4.0 beta in HACS and reload the browser.

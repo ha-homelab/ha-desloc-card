@@ -25,5 +25,10 @@
   "description": "鎖控制、回報狀態、電池和 Wi-Fi 訊號。",
   "editor.compact": "精簡版面配置",
   "error.compact": "精簡模式必須為 true 或 false。",
-  "description.compact": "精簡的門鎖控制、狀態、電池和 Wi-Fi。"
+  "description.compact": "精簡的門鎖控制、狀態、電池和 Wi-Fi。",
+  "error.command_timeout": "等待 DESLOC 指令確認逾時。重試前請檢查鎖。",
+  "error.command_unconfirmed": "DESLOC 已確認收到指令，但新的鎖狀態尚未確認。重試前請檢查鎖。",
+  "error.auth_required": "DESLOC 驗證需要處理。請在 Home Assistant 中重新驗證。",
+  "error.unavailable": "鎖整合無法使用。未嘗試進行任何變更。請先恢復連線。",
+  "error.command_in_progress": "此鎖已有其他指令正在執行。未嘗試進行變更。請等待完成後再發起新要求。"
 }

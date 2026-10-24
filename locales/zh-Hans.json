@@ -25,5 +25,10 @@
   "description": "锁控制、上报状态、电池和 Wi-Fi 信号。",
   "editor.compact": "紧凑布局",
   "error.compact": "紧凑模式必须为 true 或 false。",
-  "description.compact": "紧凑的门锁控制、状态、电池和 Wi-Fi。"
+  "description.compact": "紧凑的门锁控制、状态、电池和 Wi-Fi。",
+  "error.command_timeout": "等待 DESLOC 命令确认超时。重试前请检查锁。",
+  "error.command_unconfirmed": "DESLOC 已确认接收命令，但新锁状态尚未确认。重试前请检查锁。",
+  "error.auth_required": "DESLOC 认证需要处理。请在 Home Assistant 中重新认证。",
+  "error.unavailable": "锁集成不可用。未尝试进行任何更改。请先恢复连接。",
+  "error.command_in_progress": "此锁已有其他命令正在执行。未尝试进行更改。请等待完成后再发起新请求。"
 }

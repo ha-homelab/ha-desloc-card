@@ -25,5 +25,10 @@
   "description": "Điều khiển khóa, trạng thái báo cáo, pin và tín hiệu Wi-Fi.",
   "editor.compact": "Bố cục gọn",
   "error.compact": "Chế độ gọn phải là true hoặc false.",
-  "description.compact": "Điều khiển khóa gọn, trạng thái, pin và Wi-Fi."
+  "description.compact": "Điều khiển khóa gọn, trạng thái, pin và Wi-Fi.",
+  "error.command_timeout": "Hết thời gian chờ xác nhận lệnh DESLOC. Kiểm tra khóa trước khi thử lại.",
+  "error.command_unconfirmed": "DESLOC đã ghi nhận lệnh nhưng chưa xác nhận trạng thái khóa mới. Kiểm tra khóa trước khi thử lại.",
+  "error.auth_required": "Xác thực DESLOC cần được xử lý. Hãy xác thực lại trong Home Assistant.",
+  "error.unavailable": "Tích hợp khóa không khả dụng. Chưa thử thay đổi gì. Hãy khôi phục kết nối trước.",
+  "error.command_in_progress": "Một lệnh khác đang chạy cho khóa này. Chưa thử thay đổi gì. Đợi hoàn tất trước khi gửi yêu cầu mới."
 }

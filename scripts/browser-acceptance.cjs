@@ -377,6 +377,36 @@ async function main() {
         }
       });
     }
+    await scenario('show safe structured feedback and clear it only after a newer stable report', async () => {
+      const before = await page.evaluate(() => calls.length);
+      await page.evaluate(async () => {
+        hass.language = 'en';
+        hass.states['lock.fixture'] = { state: 'unlocked', last_changed: '2026-10-24T20:00:00Z', attributes: { friendly_name: 'Synthetic door' } };
+        hass.callService = async (...args) => {
+          calls.push(args);
+          hass.states['lock.fixture'] = { ...hass.states['lock.fixture'], state: 'unknown', last_changed: '2026-10-24T20:00:10Z' };
+          card.hass = hass;
+          throw { translation_domain: 'desloc', translation_key: 'command_timeout', message: 'PRIVATE_RESPONSE', translation_placeholders: { token: 'PRIVATE_TOKEN' } };
+        };
+        card.hass = hass;
+        await card._command('lock');
+      });
+      const feedback = page.locator('desloc-compact-lock-card').locator('.error');
+      assert.equal(await feedback.textContent(), await page.evaluate(() => messages.en['error.command_timeout']));
+      assert.equal(await page.evaluate(() => /PRIVATE_RESPONSE|PRIVATE_TOKEN/.test(card.shadowRoot.textContent)), false);
+      await page.screenshot({ path: path.join(output, 'command-feedback.png'), fullPage: true, animations: 'disabled' });
+      await page.evaluate(() => {
+        hass.states['lock.fixture'] = { ...hass.states['lock.fixture'], state: 'locked' };
+        card.hass = hass;
+      });
+      assert.notEqual(await feedback.textContent(), '', 'unchanged timestamp cannot clear the warning');
+      await page.evaluate(() => {
+        hass.states['lock.fixture'] = { ...hass.states['lock.fixture'], last_changed: '2026-10-24T20:00:20Z' };
+        card.hass = hass;
+      });
+      assert.equal(await feedback.textContent(), '');
+      assert.equal(await page.evaluate(() => calls.length), before + 1, 'recovery did not replay the command');
+    });
     await scenario('detached estimates balance a synthetic two-column Masonry fixture before rendering', async () => {
       await page.setViewportSize({ width: 760, height: 1000 });
       const masonry = await page.evaluate(() => {

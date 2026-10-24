@@ -25,5 +25,10 @@
   "description": "Sterowanie zamkiem, zgłoszony stan, bateria i sygnał Wi-Fi.",
   "editor.compact": "Układ kompaktowy",
   "error.compact": "Tryb kompaktowy musi mieć wartość true lub false.",
-  "description.compact": "Kompaktowe sterowanie zamkiem, stan, bateria i Wi-Fi."
+  "description.compact": "Kompaktowe sterowanie zamkiem, stan, bateria i Wi-Fi.",
+  "error.command_timeout": "Upłynął czas oczekiwania na potwierdzenie polecenia DESLOC. Sprawdź zamek przed ponowną próbą.",
+  "error.command_unconfirmed": "DESLOC potwierdził polecenie, ale nowy stan zamka nie jest potwierdzony. Sprawdź zamek przed ponowną próbą.",
+  "error.auth_required": "Uwierzytelnianie DESLOC wymaga uwagi. Zaloguj się ponownie w Home Assistant.",
+  "error.unavailable": "Integracja zamka jest niedostępna. Nie próbowano wprowadzać zmian. Najpierw przywróć połączenie.",
+  "error.command_in_progress": "Dla tego zamka trwa już inne polecenie. Nie próbowano wprowadzać zmian. Poczekaj na zakończenie przed nowym żądaniem."
 }

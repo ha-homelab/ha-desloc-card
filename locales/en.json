@@ -25,5 +25,10 @@
   "description": "Lock control, reported state, battery and Wi-Fi signal.",
   "editor.compact": "Compact layout",
   "error.compact": "Compact mode must be true or false.",
-  "description.compact": "Compact lock controls, state, battery and Wi-Fi."
+  "description.compact": "Compact lock controls, state, battery and Wi-Fi.",
+  "error.command_timeout": "DESLOC command confirmation timed out. Check the lock before retrying.",
+  "error.command_unconfirmed": "DESLOC acknowledged the command, but the new lock state is not confirmed. Check the lock before retrying.",
+  "error.auth_required": "DESLOC authentication requires attention. Reauthenticate in Home Assistant.",
+  "error.unavailable": "The lock integration is unavailable. No changes were attempted. Restore its connection first.",
+  "error.command_in_progress": "Another command is already in progress for this lock. No changes were attempted. Wait for it to finish before starting a new request."
 }

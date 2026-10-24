@@ -25,5 +25,10 @@
   "description": "שליטה במנעול, מצב מדווח, סוללה ואות Wi-Fi.",
   "editor.compact": "פריסה קומפקטית",
   "error.compact": "ערך המצב הקומפקטי חייב להיות true או false.",
-  "description.compact": "פקדי מנעול קומפקטיים, מצב, סוללה ו-Wi-Fi."
+  "description.compact": "פקדי מנעול קומפקטיים, מצב, סוללה ו-Wi-Fi.",
+  "error.command_timeout": "תם הזמן לאישור פקודת DESLOC. יש לבדוק את המנעול לפני ניסיון נוסף.",
+  "error.command_unconfirmed": "DESLOC אישר את קבלת הפקודה, אך מצב המנעול החדש לא אושר. יש לבדוק את המנעול לפני ניסיון נוסף.",
+  "error.auth_required": "האימות של DESLOC דורש טיפול. יש לאמת מחדש ב־Home Assistant.",
+  "error.unavailable": "שילוב המנעול אינו זמין. לא נוסה שום שינוי. יש לשחזר תחילה את החיבור.",
+  "error.command_in_progress": "פקודה אחרת כבר מתבצעת עבור מנעול זה. לא נוסה שום שינוי. יש להמתין לסיומה לפני בקשה חדשה."
 }

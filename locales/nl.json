@@ -25,5 +25,10 @@
   "description": "Slotbediening, gemelde status, batterij en wifi-signaal.",
   "editor.compact": "Compacte indeling",
   "error.compact": "Compacte modus moet true of false zijn.",
-  "description.compact": "Compacte slotbediening, status, batterij en wifi."
+  "description.compact": "Compacte slotbediening, status, batterij en wifi.",
+  "error.command_timeout": "De bevestiging van de DESLOC-opdracht duurde te lang. Controleer het slot voordat u opnieuw probeert.",
+  "error.command_unconfirmed": "DESLOC heeft de opdracht bevestigd, maar de nieuwe slotstatus is niet bevestigd. Controleer het slot voordat u opnieuw probeert.",
+  "error.auth_required": "De DESLOC-authenticatie vereist aandacht. Log opnieuw in via Home Assistant.",
+  "error.unavailable": "De slotintegratie is niet beschikbaar. Er zijn geen wijzigingen geprobeerd. Herstel eerst de verbinding.",
+  "error.command_in_progress": "Er loopt al een andere opdracht voor dit slot. Er zijn geen wijzigingen geprobeerd. Wacht tot deze klaar is voordat u een nieuw verzoek start."
 }

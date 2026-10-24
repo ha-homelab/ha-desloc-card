@@ -25,5 +25,10 @@
   "description": "Control de la cerradura, estado comunicado, batería y señal Wi-Fi.",
   "editor.compact": "Diseño compacto",
   "error.compact": "El modo compacto debe ser true o false.",
-  "description.compact": "Controles compactos de cerradura, estado, batería y Wi-Fi."
+  "description.compact": "Controles compactos de cerradura, estado, batería y Wi-Fi.",
+  "error.command_timeout": "Se agotó el tiempo de confirmación del comando DESLOC. Compruebe la cerradura antes de reintentar.",
+  "error.command_unconfirmed": "DESLOC confirmó el comando, pero no el nuevo estado de la cerradura. Compruebe la cerradura antes de reintentar.",
+  "error.auth_required": "La autenticación de DESLOC requiere atención. Autentíquese de nuevo en Home Assistant.",
+  "error.unavailable": "La integración de la cerradura no está disponible. No se intentó ningún cambio. Restablezca primero la conexión.",
+  "error.command_in_progress": "Ya hay otro comando en curso para esta cerradura. No se intentó ningún cambio. Espere a que termine antes de iniciar otra solicitud."
 }

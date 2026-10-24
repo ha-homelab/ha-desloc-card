@@ -41,6 +41,14 @@ sensor readings remain available in the compact layout.
 5. Render subsequent HA state or a localized command error. The card does not
    optimistically invent a successful result or automatically retry a command.
 
+The card translates an allowlist of structured DESLOC error codes locally.
+Unknown codes, other integrations, and arbitrary server messages use the generic
+error. A recognized timeout or command-result error can clear when the same
+entity later moves from an uncertain state to a stable report with a newer
+`last_changed` timestamp. The card does not infer recovery from sensor updates,
+elapsed time, or cached stable state. Authentication and availability errors
+are not dismissed by that rule.
+
 The integration determines how a service call reaches the device and how its
 result is confirmed. For DESLOC this is a cloud path, so reported bolt state can
 be cached and is not a door-open sensor. After an uncertain result, inspect the
