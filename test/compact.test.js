@@ -196,3 +196,31 @@ test("compact mode requires a boolean instead of coercing configuration strings"
     assert.equal(card.getCardSize(), 2);
   }
 });
+
+for (const variant of variants) {
+  test(`${variant.type} estimates detached height from long names and error content`, () => {
+    const { card } = fixture(variant);
+    card.remove();
+    assert.equal(card.isConnected, false);
+    const ordinarySize = card.getCardSize();
+    assert.equal(ordinarySize, 2);
+    card.setConfig({ type: `custom:${variant.type}`, entity: "lock.test", name: "A long entrance description ".repeat(12), ...variant.config });
+    const longNameSize = card.getCardSize();
+    assert.ok(Number.isInteger(longNameSize));
+    assert.ok(longNameSize > ordinarySize, "Masonry receives a larger estimate before the long card is attached");
+    card.setConfig({ type: `custom:${variant.type}`, entity: "lock.test", name: "Side door", ...variant.config });
+    card._error = "error.command";
+    card.hass = { ...card.hass };
+    assert.ok(card.getCardSize() > ordinarySize, "an error adds height even before DOM measurements exist");
+    assert.equal(card.isConnected, false);
+  });
+
+  test(`${variant.type} estimates configured content before Home Assistant state arrives`, () => {
+    const card = document.createElement(variant.type);
+    assert.ok(Number.isFinite(card.getCardSize()));
+    card.setConfig({ type: `custom:${variant.type}`, entity: "lock.test", name: "A long entrance description ".repeat(12), ...variant.config });
+    assert.ok(card.getCardSize() > 2);
+    card.setConfig({ entity: "lock.test", compact: false, name: "A long entrance description ".repeat(12) });
+    assert.equal(card.getCardSize(), 4, "the regular card sizing contract is unchanged");
+  });
+}

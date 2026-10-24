@@ -377,6 +377,51 @@ async function main() {
         }
       });
     }
+    await scenario('detached estimates balance a synthetic two-column Masonry fixture before rendering', async () => {
+      await page.setViewportSize({ width: 760, height: 1000 });
+      const masonry = await page.evaluate(() => {
+        const container = document.createElement('section');
+        container.style.cssText = 'display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px';
+        const columns = [document.createElement('div'), document.createElement('div')];
+        for (const column of columns) {
+          column.style.cssText = 'display:flex;flex-direction:column;gap:16px;min-width:0';
+          container.append(column);
+        }
+        const weights = [0, 0];
+        const estimates = [];
+        const placements = [];
+        const cards = [];
+        for (const [index, name] of [
+          'Very detailed synthetic entrance name that wraps over multiple lines '.repeat(7),
+          'Front door', 'Back door',
+        ].entries()) {
+          const card = document.createElement('desloc-compact-lock-card');
+          card.setConfig({ entity: 'lock.fixture', name, language: 'en', battery_entity: 'sensor.battery' });
+          card.hass = hass;
+          // This fixture deliberately asks for estimates before DOM attachment,
+          // as Masonry layout does; it does not claim to embed the HA frontend.
+          estimates.push(card.getCardSize());
+          const column = weights[0] <= weights[1] ? 0 : 1;
+          placements.push(column);
+          weights[column] += estimates[index];
+          columns[column].append(card);
+          cards.push(card);
+        }
+        document.body.replaceChildren(container);
+        return {
+          estimates, placements,
+          rendered: cards.map(card => ({
+            height: card.getBoundingClientRect().height, size: card.getCardSize(),
+          })),
+        };
+      });
+      assert.ok(masonry.estimates[0] > masonry.estimates[1] + masonry.estimates[2], 'long detached card has a larger weight than two short cards');
+      assert.deepEqual(masonry.placements, [0, 1, 1], 'short cards fill the other column instead of stacking beneath the tall card');
+      for (const { height, size } of masonry.rendered) {
+        assert.ok(size * 50 >= height, 'attached size follows measured content');
+      }
+      await page.screenshot({ path: path.join(output, 'compact-masonry.png'), fullPage: true, animations: 'disabled' });
+    });
     fs.writeFileSync(process.env.CI_BROWSER_EVIDENCE, JSON.stringify({
       ...runtime, engine: browser.browserType().name(), browserVersion: browser.version(),
       sourceSha256, testsPassed: scenarios.length, testsFailed: 0, scenarios,

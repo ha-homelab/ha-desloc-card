@@ -159,7 +159,25 @@ export class DeslocLockCard extends HTMLElement {
   get hass() { return this._hass; }
   _isCompact() { return this._config?.compact ?? false; }
   getCardSize() {
-    return this._isCompact() ? Math.max(2, Math.ceil(this.shadowRoot.querySelector("ha-card").getBoundingClientRect().height / 50)) : 4;
+    if (!this._isCompact()) return 4;
+    const root = this.shadowRoot;
+    const measured = root.querySelector("ha-card").getBoundingClientRect().height;
+    if (measured > 0) return Math.max(2, Math.ceil(measured / 50));
+    // Masonry asks before mounting the card. Estimate a common 320px column
+    // from its rendered, localized content; a mounted measurement takes priority.
+    // Allow roughly 120px for text beside the icon and action. Count wide CJK
+    // characters twice and ignore invisible bidi isolates when estimating wraps.
+    const lines = (text, columns) => Math.ceil([...String(text).trim()
+      .replace(/[\u2066-\u2069]/g, "")
+      .replace(/[\u2e80-\ua4cf\uac00-\ud7af\uf900-\ufaff]/g, "xx")].length / columns);
+    const text = selector => root.querySelector(selector).textContent;
+    const name = text("h2") || this._config?.name || this._hass?.states?.[this._config?.entity]?.attributes?.friendly_name || this._config?.entity || "";
+    const metrics = [...root.querySelectorAll(".metric")].filter(el => !el.hidden).map(el => el.textContent).join("  ");
+    const contentHeight = lines(name, 14) * 20 + lines(text(".state"), 16) * 18 + lines(metrics, 22) * 16 + 4;
+    const actionHeight = Math.max(44, lines(text(".action"), 10) * 18 + 16);
+    const errorLines = lines(text(".error"), 38);
+    const estimated = 24 + Math.max(contentHeight, actionHeight) + (errorLines ? 10 + errorLines * 18 : 0);
+    return Math.max(2, Math.ceil(estimated / 50));
   }
   getGridOptions() {
     // Content height accommodates narrow sections, translated names and errors.
