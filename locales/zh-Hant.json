@@ -22,5 +22,8 @@
   "editor.signal_entity": "Wi-Fi 訊號感測器（選填）",
   "editor.language": "語言",
   "editor.automatic": "使用 Home Assistant 的語言",
-  "description": "鎖控制、回報狀態、電池和 Wi-Fi 訊號。"
+  "description": "鎖控制、回報狀態、電池和 Wi-Fi 訊號。",
+  "editor.compact": "精簡版面配置",
+  "error.compact": "精簡模式必須為 true 或 false。",
+  "description.compact": "精簡的門鎖控制、狀態、電池和 Wi-Fi。"
 }

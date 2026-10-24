@@ -22,5 +22,8 @@
   "editor.signal_entity": "Sensor de sinal Wi-Fi (opcional)",
   "editor.language": "Idioma",
   "editor.automatic": "Usar o idioma do Home Assistant",
-  "description": "Controlo da fechadura, estado comunicado, bateria e sinal Wi-Fi."
+  "description": "Controlo da fechadura, estado comunicado, bateria e sinal Wi-Fi.",
+  "editor.compact": "Layout compacto",
+  "error.compact": "O modo compacto deve ser true ou false.",
+  "description.compact": "Controlos compactos da fechadura, estado, bateria e Wi-Fi."
 }

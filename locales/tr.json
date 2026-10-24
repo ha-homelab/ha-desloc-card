@@ -22,5 +22,8 @@
   "editor.signal_entity": "Wi-Fi sinyal sensörü (isteğe bağlı)",
   "editor.language": "Dil",
   "editor.automatic": "Home Assistant dilini kullan",
-  "description": "Kilit kontrolü, bildirilen durum, pil ve Wi-Fi sinyali."
+  "description": "Kilit kontrolü, bildirilen durum, pil ve Wi-Fi sinyali.",
+  "editor.compact": "Kompakt düzen",
+  "error.compact": "Kompakt mod true veya false olmalıdır.",
+  "description.compact": "Kompakt kilit denetimleri, durum, pil ve Wi-Fi."
 }

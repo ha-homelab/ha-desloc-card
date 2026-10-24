@@ -22,5 +22,8 @@
   "editor.signal_entity": "Wi-Fi सिग्नल सेंसर (वैकल्पिक)",
   "editor.language": "भाषा",
   "editor.automatic": "Home Assistant की भाषा इस्तेमाल करें",
-  "description": "लॉक नियंत्रण, बताई गई स्थिति, बैटरी और Wi-Fi सिग्नल।"
+  "description": "लॉक नियंत्रण, बताई गई स्थिति, बैटरी और Wi-Fi सिग्नल।",
+  "editor.compact": "कॉम्पैक्ट लेआउट",
+  "error.compact": "कॉम्पैक्ट मोड का मान true या false होना चाहिए।",
+  "description.compact": "कॉम्पैक्ट लॉक नियंत्रण, स्थिति, बैटरी और Wi-Fi।"
 }

@@ -8,7 +8,7 @@
 
 A Home Assistant dashboard card for [DESLOC for Home Assistant](https://github.com/ha-homelab/ha-desloc).
 Shows reported lock state, battery, and Wi-Fi signal, with one adaptive action button,
-a visual editor, light/dark theme support, and a required unlock confirmation.
+a visual editor, full and compact layouts, light/dark theme support, and a required unlock confirmation.
 The card is independent of DESLOC, Home Assistant, and HACS.
 
 The companion integration automatically discovers all locks returned by the
@@ -99,8 +99,43 @@ signal_entity: sensor.front_door_wi_fi_signal
 ```
 
 Use your actual entity IDs. Only `entity` is required; it must be a `lock` entity.
-`name`, `battery_entity`, `signal_entity`, and `language` are optional. Use a battery percentage
+`name`, `battery_entity`, `signal_entity`, `language`, and `compact` are optional. Use a battery percentage
 sensor and RSSI sensor in dBm. Omit sensors that do not exist.
+
+### Compact card (0.4.0 beta)
+
+The compact layout keeps the lock name, reported state, optional battery/Wi-Fi
+readings, details button, and single action in a smaller card. It uses the same
+unlock confirmation and command handling as the full layout.
+
+Both layouts ship in the **same HACS download and JavaScript resource**:
+
+- Edit an existing **DESLOC Lock Card** and enable **Compact layout**.
+- Or add **DESLOC Compact Lock Card** from the dashboard card picker. This starts
+  with the compact layout enabled; its editor can also switch back to the full layout.
+
+For an existing card, add `compact: true` to its YAML. For a new compact card:
+
+```yaml
+type: custom:desloc-compact-lock-card
+entity: lock.front_door
+name: Front door
+battery_entity: sensor.front_door_battery
+signal_entity: sensor.front_door_wi_fi_signal
+```
+
+The full card remains the default for existing configurations. Compact cards
+start at full section width with automatic height in a Sections dashboard and
+can be resized down to half a section. On narrow tiles the action moves below
+the text, and long names or errors can expand the card without clipping.
+No second resource, integration setup, or account login is needed.
+
+**Beta testing:** compact mode is introduced in the 0.4.0 beta series. In HACS,
+open **DESLOC Lock Card**, choose **Redownload**, enable prerelease versions,
+and select the latest `v0.4.0-beta.*` release. Reload the browser after downloading.
+The stable 0.3.x series does not include compact mode. To roll back, switch compact
+card types to `custom:desloc-lock-card`, remove `compact`, redownload the previous
+stable version, and reload the browser.
 
 ## Languages
 
@@ -118,7 +153,7 @@ in English.
 
 ## Behavior
 
-- One full-width button shows **Unlock** when the reported state is locked and
+- One action button shows **Unlock** when the reported state is locked and
   **Lock** when it is unlocked. The reported state remains visible above it.
 - Unlock requires a reported **locked** state and an explicit confirmation that
   names the selected lock. The title and confirmation use the configured display

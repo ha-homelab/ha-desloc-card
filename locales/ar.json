@@ -22,5 +22,8 @@
   "editor.signal_entity": "مستشعر إشارة Wi-Fi (اختياري)",
   "editor.language": "اللغة",
   "editor.automatic": "استخدام لغة Home Assistant",
-  "description": "التحكم في القفل وحالته المُبلّغ عنها والبطارية وإشارة Wi-Fi."
+  "description": "التحكم في القفل وحالته المُبلّغ عنها والبطارية وإشارة Wi-Fi.",
+  "editor.compact": "تخطيط مضغوط",
+  "error.compact": "يجب أن تكون قيمة الوضع المضغوط true أو false.",
+  "description.compact": "عناصر تحكم مضغوطة للقفل والحالة والبطارية وWi-Fi."
 }

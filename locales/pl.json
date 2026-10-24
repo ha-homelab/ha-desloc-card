@@ -22,5 +22,8 @@
   "editor.signal_entity": "Czujnik sygnału Wi-Fi (opcjonalny)",
   "editor.language": "Język",
   "editor.automatic": "Użyj języka Home Assistant",
-  "description": "Sterowanie zamkiem, zgłoszony stan, bateria i sygnał Wi-Fi."
+  "description": "Sterowanie zamkiem, zgłoszony stan, bateria i sygnał Wi-Fi.",
+  "editor.compact": "Układ kompaktowy",
+  "error.compact": "Tryb kompaktowy musi mieć wartość true lub false.",
+  "description.compact": "Kompaktowe sterowanie zamkiem, stan, bateria i Wi-Fi."
 }

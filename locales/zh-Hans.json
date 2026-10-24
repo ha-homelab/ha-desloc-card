@@ -22,5 +22,8 @@
   "editor.signal_entity": "Wi-Fi 信号传感器（可选）",
   "editor.language": "语言",
   "editor.automatic": "使用 Home Assistant 的语言",
-  "description": "锁控制、上报状态、电池和 Wi-Fi 信号。"
+  "description": "锁控制、上报状态、电池和 Wi-Fi 信号。",
+  "editor.compact": "紧凑布局",
+  "error.compact": "紧凑模式必须为 true 或 false。",
+  "description.compact": "紧凑的门锁控制、状态、电池和 Wi-Fi。"
 }

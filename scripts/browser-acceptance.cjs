@@ -23,9 +23,9 @@ async function main() {
     <script type="module">
       import {LOCALES, MESSAGES} from '/ha-desloc-card.js';
       customElements.define('ha-card', class extends HTMLElement {
-        connectedCallback() {
-          this.style.display='block';this.style.border='1px solid var(--divider-color)';
-          this.style.borderRadius='16px';this.style.boxShadow='0 2px 8px #17212b0d';
+        constructor() {
+          super();
+          this.attachShadow({mode:'open'}).innerHTML = '<style>:host{display:block;border:1px solid var(--divider-color);border-radius:16px;box-shadow:0 2px 8px #17212b0d}</style><slot></slot>';
         }
       });
       window.locales=LOCALES; window.messages=MESSAGES; window.calls=[];
@@ -278,6 +278,150 @@ async function main() {
     }
     await page.evaluate(() => { updateState('locked'); card.setConfig({ entity: 'lock.fixture', name: 'Synthetic door', battery_entity: 'sensor.battery', language: 'en' }); });
     await page.screenshot({ path: path.join(output, 'card.png'), fullPage: true, animations: 'disabled' });
+    const regularHeight = (await card.boundingBox()).height;
+    for (const variant of [
+      { type: 'desloc-lock-card', config: { compact: true }, screenshot: 'compact-mode.png' },
+      { type: 'desloc-compact-lock-card', config: {}, screenshot: 'compact-card.png' },
+    ]) {
+      await scenario(`${variant.type} compact layout retains controls and fits narrow RTL screens`, async () => {
+        await page.evaluate(({ type, config }) => {
+          window.card.remove();
+          window.card = document.createElement(type);
+          card.setConfig({ type: `custom:${type}`, entity: 'lock.fixture', name: 'Synthetic door',
+            battery_entity: 'sensor.battery', signal_entity: 'sensor.signal', ...config });
+          hass.states['sensor.signal'] = { state: '-65' };
+          hass.language = 'en'; card.hass = hass; document.body.append(card);
+        }, variant);
+        const compact = page.locator(variant.type);
+        const compactAction = compact.locator('.action');
+        const callsBefore = await page.evaluate(() => calls.length);
+        assert.equal(await compact.locator('ha-card').evaluate(surface => getComputedStyle(surface).display), 'grid', 'compact surface uses its grid layout');
+        assert.ok((await compact.boundingBox()).height < regularHeight * 0.75, 'compact card is visibly shorter');
+        assert.match(await compact.locator('.battery').textContent(), /55%/);
+        assert.match(await compact.locator('.signal').textContent(), /-65 dBm/);
+        assert.equal(await compact.locator('.actions button').count(), 1);
+        for (const width of [320, 390]) {
+          await page.setViewportSize({ width, height: 844 });
+          for (const language of ['en', 'de', 'ru', 'ar']) {
+            await page.evaluate(language => { hass.language = language; card.hass = hass; }, language);
+            for (const state of ['locked', 'unlocked', 'unavailable']) {
+              await page.evaluate(state => updateState(state), state);
+              assert.equal(await compactAction.isDisabled(), state === 'unavailable');
+              assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true,
+                `${variant.type}: ${width}px/${language}/${state} has no horizontal page overflow`);
+              const bounds = await compactAction.boundingBox();
+              assert.ok(bounds.width >= 44 && bounds.height >= 44, 'action remains a touch target');
+              assert.equal(await compactAction.evaluate(button => button.scrollWidth <= button.clientWidth), true,
+                `${variant.type}: ${language} action label fits`);
+            }
+          }
+        }
+        await page.setViewportSize({ width: 900, height: 900 });
+        for (const width of [190, 210, 240]) {
+          await page.evaluate(width => { card.style.width = `${width}px`; }, width);
+          for (const language of ['en', 'ar']) {
+            await page.evaluate(language => { hass.language = language; card.hass = hass; }, language);
+            for (const stressed of [false, true]) {
+              await page.evaluate(({ stressed, config, type }) => {
+                card.setConfig({ type: `custom:${type}`, entity: 'lock.fixture',
+                  name: stressed ? 'A very long descriptive name for the synthetic side entrance lock' : 'Synthetic door',
+                  battery_entity: 'sensor.battery', signal_entity: 'sensor.signal', ...config });
+                card._error = stressed ? 'error.command' : '';
+                updateState(stressed ? 'unavailable' : 'locked');
+              }, { stressed, ...variant });
+              const geometry = await compact.evaluate(element => {
+                const root = element.shadowRoot;
+                const surface = root.querySelector('ha-card');
+                const bounds = surface.getBoundingClientRect();
+                return {
+                  height: bounds.height, reportedSize: element.getCardSize(), gridRows: element.getGridOptions().rows,
+                  inside: ['.info', 'h2', '.state', '.telemetry', '.action', ...(root.querySelector('.error').textContent ? ['.error'] : [])].every(selector => {
+                    const node = root.querySelector(selector);
+                    const box = node.getBoundingClientRect();
+                    return box.left >= bounds.left && box.right <= bounds.right && box.top >= bounds.top && box.bottom <= bounds.bottom;
+                  }),
+                  noOverflow: surface.scrollWidth <= surface.clientWidth,
+                  touchSize: root.querySelector('.action').getBoundingClientRect().height,
+                };
+              });
+              assert.equal(geometry.gridRows, 'auto', 'Sections rows follow the content instead of clipping a fixed slot');
+              assert.ok(geometry.reportedSize * 50 >= geometry.height, 'Masonry size estimate accommodates wrapped text and errors');
+              assert.equal(geometry.inside, true, `${variant.type}: ${width}px/${language} content fits the card`);
+              assert.equal(geometry.noOverflow, true, `${variant.type}: ${width}px/${language} card has no hidden horizontal overflow`);
+              assert.ok(geometry.touchSize >= 44, `${variant.type}: narrow card retains a 44px action`);
+              assert.ok(geometry.height < (stressed ? 450 : 220), `${variant.type}: ${width}px/${language} does not collapse text into a tall narrow column`);
+            }
+          }
+        }
+        await page.screenshot({ path: path.join(output, `${variant.type}-narrow-error.png`), fullPage: true, animations: 'disabled' });
+        await page.setViewportSize({ width: 390, height: 844 });
+        await page.evaluate(({ type, config }) => {
+          card.style.width = ''; card._error = '';
+          card.setConfig({ type: `custom:${type}`, entity: 'lock.fixture', name: 'Synthetic door',
+            battery_entity: 'sensor.battery', signal_entity: 'sensor.signal', ...config });
+          updateState('locked'); hass.language = 'en'; card.hass = hass;
+        }, variant);
+        await compactAction.focus();
+        const dialogPromise = page.waitForEvent('dialog');
+        const activation = page.keyboard.press('Enter');
+        const dialog = await dialogPromise;
+        assert.match(dialog.message(), /Synthetic door/);
+        await dialog.dismiss();
+        await activation;
+        assert.equal(await page.evaluate(() => calls.length), callsBefore, 'compact render and dismissed keyboard unlock send nothing');
+        await page.screenshot({ path: path.join(output, variant.screenshot), fullPage: true, animations: 'disabled' });
+        if (variant.type === 'desloc-compact-lock-card') {
+          await page.setViewportSize({ width: 320, height: 844 });
+          await page.evaluate(() => { hass.language = 'ar'; card.hass = hass; });
+          await page.screenshot({ path: path.join(output, 'compact-rtl.png'), fullPage: true, animations: 'disabled' });
+        }
+      });
+    }
+    await scenario('detached estimates balance a synthetic two-column Masonry fixture before rendering', async () => {
+      await page.setViewportSize({ width: 760, height: 1000 });
+      const masonry = await page.evaluate(() => {
+        const container = document.createElement('section');
+        container.style.cssText = 'display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px';
+        const columns = [document.createElement('div'), document.createElement('div')];
+        for (const column of columns) {
+          column.style.cssText = 'display:flex;flex-direction:column;gap:16px;min-width:0';
+          container.append(column);
+        }
+        const weights = [0, 0];
+        const estimates = [];
+        const placements = [];
+        const cards = [];
+        for (const [index, name] of [
+          'Very detailed synthetic entrance name that wraps over multiple lines '.repeat(7),
+          'Front door', 'Back door',
+        ].entries()) {
+          const card = document.createElement('desloc-compact-lock-card');
+          card.setConfig({ entity: 'lock.fixture', name, language: 'en', battery_entity: 'sensor.battery' });
+          card.hass = hass;
+          // This fixture deliberately asks for estimates before DOM attachment,
+          // as Masonry layout does; it does not claim to embed the HA frontend.
+          estimates.push(card.getCardSize());
+          const column = weights[0] <= weights[1] ? 0 : 1;
+          placements.push(column);
+          weights[column] += estimates[index];
+          columns[column].append(card);
+          cards.push(card);
+        }
+        document.body.replaceChildren(container);
+        return {
+          estimates, placements,
+          rendered: cards.map(card => ({
+            height: card.getBoundingClientRect().height, size: card.getCardSize(),
+          })),
+        };
+      });
+      assert.ok(masonry.estimates[0] > masonry.estimates[1] + masonry.estimates[2], 'long detached card has a larger weight than two short cards');
+      assert.deepEqual(masonry.placements, [0, 1, 1], 'short cards fill the other column instead of stacking beneath the tall card');
+      for (const { height, size } of masonry.rendered) {
+        assert.ok(size * 50 >= height, 'attached size follows measured content');
+      }
+      await page.screenshot({ path: path.join(output, 'compact-masonry.png'), fullPage: true, animations: 'disabled' });
+    });
     fs.writeFileSync(process.env.CI_BROWSER_EVIDENCE, JSON.stringify({
       ...runtime, engine: browser.browserType().name(), browserVersion: browser.version(),
       sourceSha256, testsPassed: scenarios.length, testsFailed: 0, scenarios,
