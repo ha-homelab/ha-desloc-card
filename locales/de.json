@@ -22,5 +22,8 @@
   "editor.signal_entity": "WLAN-Signalsensor (optional)",
   "editor.language": "Sprache",
   "editor.automatic": "Sprache von Home Assistant verwenden",
-  "description": "Schlosssteuerung, gemeldeter Zustand, Batterie und WLAN-Signal."
+  "description": "Schlosssteuerung, gemeldeter Zustand, Batterie und WLAN-Signal.",
+  "editor.compact": "Kompaktes Layout",
+  "error.compact": "Der Kompaktmodus muss true oder false sein.",
+  "description.compact": "Kompakte Schlosssteuerung, Zustand, Batterie und WLAN."
 }

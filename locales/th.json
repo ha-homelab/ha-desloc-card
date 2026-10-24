@@ -22,5 +22,8 @@
   "editor.signal_entity": "เซ็นเซอร์สัญญาณ Wi-Fi (ไม่บังคับ)",
   "editor.language": "ภาษา",
   "editor.automatic": "ใช้ภาษาของ Home Assistant",
-  "description": "ควบคุมล็อก สถานะที่รายงาน แบตเตอรี่ และสัญญาณ Wi-Fi"
+  "description": "ควบคุมล็อก สถานะที่รายงาน แบตเตอรี่ และสัญญาณ Wi-Fi",
+  "editor.compact": "รูปแบบกะทัดรัด",
+  "error.compact": "โหมดกะทัดรัดต้องมีค่าเป็น true หรือ false",
+  "description.compact": "ตัวควบคุมล็อก สถานะ แบตเตอรี่ และ Wi-Fi แบบกะทัดรัด"
 }

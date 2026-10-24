@@ -22,5 +22,8 @@
   "editor.signal_entity": "Wi-Fi 信号センサー（任意）",
   "editor.language": "言語",
   "editor.automatic": "Home Assistant の言語を使用",
-  "description": "錠の操作、報告された状態、バッテリー、Wi-Fi 信号。"
+  "description": "錠の操作、報告された状態、バッテリー、Wi-Fi 信号。",
+  "editor.compact": "コンパクトなレイアウト",
+  "error.compact": "コンパクトモードには true または false を指定してください。",
+  "description.compact": "コンパクトな錠の操作、状態、バッテリー、Wi-Fi。"
 }

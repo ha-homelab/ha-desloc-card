@@ -22,5 +22,8 @@
   "editor.signal_entity": "חיישן אות Wi-Fi (אופציונלי)",
   "editor.language": "שפה",
   "editor.automatic": "שימוש בשפה של Home Assistant",
-  "description": "שליטה במנעול, מצב מדווח, סוללה ואות Wi-Fi."
+  "description": "שליטה במנעול, מצב מדווח, סוללה ואות Wi-Fi.",
+  "editor.compact": "פריסה קומפקטית",
+  "error.compact": "ערך המצב הקומפקטי חייב להיות true או false.",
+  "description.compact": "פקדי מנעול קומפקטיים, מצב, סוללה ו-Wi-Fi."
 }

@@ -22,5 +22,8 @@
   "editor.signal_entity": "Sensore segnale Wi-Fi (facoltativo)",
   "editor.language": "Lingua",
   "editor.automatic": "Usa la lingua di Home Assistant",
-  "description": "Controllo serratura, stato segnalato, batteria e segnale Wi-Fi."
+  "description": "Controllo serratura, stato segnalato, batteria e segnale Wi-Fi.",
+  "editor.compact": "Layout compatto",
+  "error.compact": "La modalità compatta deve essere true o false.",
+  "description.compact": "Comandi compatti della serratura, stato, batteria e Wi-Fi."
 }

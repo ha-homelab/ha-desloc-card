@@ -22,5 +22,8 @@
   "editor.signal_entity": "Wifi-signaalsensor (optioneel)",
   "editor.language": "Taal",
   "editor.automatic": "Taal van Home Assistant gebruiken",
-  "description": "Slotbediening, gemelde status, batterij en wifi-signaal."
+  "description": "Slotbediening, gemelde status, batterij en wifi-signaal.",
+  "editor.compact": "Compacte indeling",
+  "error.compact": "Compacte modus moet true of false zijn.",
+  "description.compact": "Compacte slotbediening, status, batterij en wifi."
 }
