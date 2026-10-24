@@ -25,5 +25,10 @@
   "description": "Schlosssteuerung, gemeldeter Zustand, Batterie und WLAN-Signal.",
   "editor.compact": "Kompaktes Layout",
   "error.compact": "Der Kompaktmodus muss true oder false sein.",
-  "description.compact": "Kompakte Schlosssteuerung, Zustand, Batterie und WLAN."
+  "description.compact": "Kompakte Schlosssteuerung, Zustand, Batterie und WLAN.",
+  "error.command_timeout": "Die Bestätigung des DESLOC-Befehls hat das Zeitlimit überschritten. Prüfen Sie das Schloss vor einem erneuten Versuch.",
+  "error.command_unconfirmed": "DESLOC hat den Befehl bestätigt, aber der neue Schlosszustand ist unbestätigt. Prüfen Sie das Schloss vor einem erneuten Versuch.",
+  "error.auth_required": "Die DESLOC-Anmeldung erfordert Ihre Aufmerksamkeit. Melden Sie sich in Home Assistant erneut an.",
+  "error.unavailable": "Die Schlossintegration ist nicht verfügbar. Es wurden keine Änderungen versucht. Stellen Sie zuerst die Verbindung wieder her.",
+  "error.command_in_progress": "Für dieses Schloss läuft bereits ein anderer Befehl. Es wurden keine Änderungen versucht. Warten Sie auf dessen Abschluss, bevor Sie erneut anfragen."
 }

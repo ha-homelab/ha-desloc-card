@@ -25,5 +25,10 @@
   "description": "Ovládání zámku, hlášený stav, baterie a signál Wi-Fi.",
   "editor.compact": "Kompaktní rozložení",
   "error.compact": "Kompaktní režim musí mít hodnotu true nebo false.",
-  "description.compact": "Kompaktní ovládání zámku, stav, baterie a Wi-Fi."
+  "description.compact": "Kompaktní ovládání zámku, stav, baterie a Wi-Fi.",
+  "error.command_timeout": "Vypršel časový limit potvrzení příkazu DESLOC. Před opakováním zkontrolujte zámek.",
+  "error.command_unconfirmed": "DESLOC potvrdil příkaz, ale nový stav zámku není potvrzen. Před opakováním zkontrolujte zámek.",
+  "error.auth_required": "Ověření DESLOC vyžaduje pozornost. Znovu se přihlaste v Home Assistant.",
+  "error.unavailable": "Integrace zámku není dostupná. Nebyl proveden žádný pokus o změnu. Nejprve obnovte připojení.",
+  "error.command_in_progress": "Pro tento zámek již probíhá jiný příkaz. Nebyl proveden žádný pokus o změnu. Před novým požadavkem počkejte na dokončení."
 }

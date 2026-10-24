@@ -25,5 +25,10 @@
   "description": "Kontrol kunci, status yang dilaporkan, baterai, dan sinyal Wi-Fi.",
   "editor.compact": "Tata letak ringkas",
   "error.compact": "Mode ringkas harus bernilai true atau false.",
-  "description.compact": "Kontrol kunci ringkas, status, baterai, dan Wi-Fi."
+  "description.compact": "Kontrol kunci ringkas, status, baterai, dan Wi-Fi.",
+  "error.command_timeout": "Konfirmasi perintah DESLOC kehabisan waktu. Periksa kunci sebelum mencoba lagi.",
+  "error.command_unconfirmed": "DESLOC mengakui perintah, tetapi status kunci baru belum dikonfirmasi. Periksa kunci sebelum mencoba lagi.",
+  "error.auth_required": "Autentikasi DESLOC memerlukan perhatian. Autentikasi ulang di Home Assistant.",
+  "error.unavailable": "Integrasi kunci tidak tersedia. Tidak ada perubahan yang dicoba. Pulihkan koneksi terlebih dahulu.",
+  "error.command_in_progress": "Perintah lain sedang berjalan untuk kunci ini. Tidak ada perubahan yang dicoba. Tunggu hingga selesai sebelum permintaan baru."
 }

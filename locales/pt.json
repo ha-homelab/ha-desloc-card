@@ -25,5 +25,10 @@
   "description": "Controlo da fechadura, estado comunicado, bateria e sinal Wi-Fi.",
   "editor.compact": "Layout compacto",
   "error.compact": "O modo compacto deve ser true ou false.",
-  "description.compact": "Controlos compactos da fechadura, estado, bateria e Wi-Fi."
+  "description.compact": "Controlos compactos da fechadura, estado, bateria e Wi-Fi.",
+  "error.command_timeout": "O tempo de confirmação do comando DESLOC esgotou-se. Verifique a fechadura antes de repetir.",
+  "error.command_unconfirmed": "DESLOC confirmou o comando, mas o novo estado da fechadura não está confirmado. Verifique a fechadura antes de repetir.",
+  "error.auth_required": "A autenticação DESLOC requer atenção. Autentique-se novamente no Home Assistant.",
+  "error.unavailable": "A integração da fechadura está indisponível. Não foram tentadas alterações. Restabeleça primeiro a ligação.",
+  "error.command_in_progress": "Já está em curso outro comando para esta fechadura. Não foram tentadas alterações. Aguarde que termine antes de iniciar outro pedido."
 }

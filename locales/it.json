@@ -25,5 +25,10 @@
   "description": "Controllo serratura, stato segnalato, batteria e segnale Wi-Fi.",
   "editor.compact": "Layout compatto",
   "error.compact": "La modalità compatta deve essere true o false.",
-  "description.compact": "Comandi compatti della serratura, stato, batteria e Wi-Fi."
+  "description.compact": "Comandi compatti della serratura, stato, batteria e Wi-Fi.",
+  "error.command_timeout": "Tempo scaduto per la conferma del comando DESLOC. Controlla la serratura prima di riprovare.",
+  "error.command_unconfirmed": "DESLOC ha confermato il comando, ma il nuovo stato della serratura non è confermato. Controlla la serratura prima di riprovare.",
+  "error.auth_required": "L’autenticazione DESLOC richiede attenzione. Autenticati di nuovo in Home Assistant.",
+  "error.unavailable": "L’integrazione della serratura non è disponibile. Non sono state tentate modifiche. Ripristina prima la connessione.",
+  "error.command_in_progress": "Un altro comando è già in corso per questa serratura. Non sono state tentate modifiche. Attendi che termini prima di una nuova richiesta."
 }

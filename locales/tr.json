@@ -25,5 +25,10 @@
   "description": "Kilit kontrolü, bildirilen durum, pil ve Wi-Fi sinyali.",
   "editor.compact": "Kompakt düzen",
   "error.compact": "Kompakt mod true veya false olmalıdır.",
-  "description.compact": "Kompakt kilit denetimleri, durum, pil ve Wi-Fi."
+  "description.compact": "Kompakt kilit denetimleri, durum, pil ve Wi-Fi.",
+  "error.command_timeout": "DESLOC komut onayı zaman aşımına uğradı. Yeniden denemeden önce kilidi kontrol edin.",
+  "error.command_unconfirmed": "DESLOC komutu onayladı ancak yeni kilit durumu doğrulanmadı. Yeniden denemeden önce kilidi kontrol edin.",
+  "error.auth_required": "DESLOC kimlik doğrulaması ilgilenmenizi gerektiriyor. Home Assistant’ta yeniden giriş yapın.",
+  "error.unavailable": "Kilit entegrasyonu kullanılamıyor. Hiçbir değişiklik denenmedi. Önce bağlantıyı düzeltin.",
+  "error.command_in_progress": "Bu kilit için başka bir komut sürüyor. Hiçbir değişiklik denenmedi. Yeni istekten önce bitmesini bekleyin."
 }

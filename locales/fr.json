@@ -25,5 +25,10 @@
   "description": "Commande de serrure, état signalé, batterie et signal Wi-Fi.",
   "editor.compact": "Disposition compacte",
   "error.compact": "Le mode compact doit être true ou false.",
-  "description.compact": "Commandes compactes de serrure, état, batterie et Wi-Fi."
+  "description.compact": "Commandes compactes de serrure, état, batterie et Wi-Fi.",
+  "error.command_timeout": "Le délai de confirmation de la commande DESLOC est dépassé. Vérifiez la serrure avant de réessayer.",
+  "error.command_unconfirmed": "DESLOC a accusé réception de la commande, mais le nouvel état de la serrure n’est pas confirmé. Vérifiez la serrure avant de réessayer.",
+  "error.auth_required": "L’authentification DESLOC requiert votre attention. Authentifiez-vous à nouveau dans Home Assistant.",
+  "error.unavailable": "L’intégration de la serrure est indisponible. Aucune modification n’a été tentée. Rétablissez d’abord la connexion.",
+  "error.command_in_progress": "Une autre commande est en cours pour cette serrure. Aucune modification n’a été tentée. Attendez sa fin avant une nouvelle demande."
 }

@@ -169,6 +169,18 @@ in English.
   unavailable, never as zero.
 - The card never retries a command automatically and never invents a successful
   state. A failed or unconfirmed action displays an error.
+
+Recognized DESLOC errors distinguish a timeout, missing state confirmation,
+authentication requiring attention, unavailable status, and another operation
+in progress. The reason comes from structured integration error codes; the card
+does not display raw server messages. Older integrations may still provide only
+the generic command error. A timeout does not prove that the physical action
+failed: check the lock before retrying.
+
+For a recognized command failure, a subsequent transition from an uncertain
+state to a newer stable HA report clears the previous error. Updating battery
+or Wi-Fi readings alone does not dismiss it. Detailed investigation uses the
+integration's [command diagnostics and debug logs](https://github.com/ha-homelab/ha-desloc/blob/main/docs/troubleshooting.md#command-timeout-or-unknown-state).
 - The information button opens the normal Home Assistant entity details.
 
 Reported bolt state is not a door-open sensor and may be cached by the cloud.
