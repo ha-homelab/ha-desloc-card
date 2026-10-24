@@ -4,6 +4,7 @@
 
 ### Added
 
+- Show a centered loading ring in the action button while a command is pending or Home Assistant reports locking/unlocking. Both layouts retain localized accessible labels, disabled-button protection, and a static indicator for reduced-motion preferences.
 - Add a compact layout with the lock name, reported state, optional battery/Wi-Fi readings, details, and one adaptive action button.
 - Add a **Compact layout** toggle to the visual editor and the optional `compact` YAML setting. Existing cards keep their full layout by default.
 - Include **DESLOC Compact Lock Card** in the dashboard card picker as `custom:desloc-compact-lock-card`. Both variants use the same HACS package and JavaScript resource.
