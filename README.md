@@ -102,7 +102,7 @@ Use your actual entity IDs. Only `entity` is required; it must be a `lock` entit
 `name`, `battery_entity`, `signal_entity`, `language`, and `compact` are optional. Use a battery percentage
 sensor and RSSI sensor in dBm. Omit sensors that do not exist.
 
-### Compact card (0.4.0 beta)
+### Compact card (0.4.0 and newer)
 
 The compact layout keeps the lock name, reported state, optional battery/Wi-Fi
 readings, details button, and single action in a smaller card. It uses the same
@@ -130,12 +130,15 @@ can be resized down to half a section. On narrow tiles the action moves below
 the text, and long names or errors can expand the card without clipping.
 No second resource, integration setup, or account login is needed.
 
-**Beta testing:** compact mode is introduced in the 0.4.0 beta series. In HACS,
-open **DESLOC Lock Card**, choose **Redownload**, enable prerelease versions,
-and select the latest `v0.4.0-beta.*` release. Reload the browser after downloading.
-The stable 0.3.x series does not include compact mode. To roll back, switch compact
-card types to `custom:desloc-lock-card`, remove `compact`, redownload the previous
-stable version, and reload the browser.
+Update **DESLOC Lock Card** through HACS to version **0.4.0 or newer** and reload
+the browser to use compact mode. The 0.3.x series does not include this layout.
+To roll back to 0.3.x, switch compact card types to `custom:desloc-lock-card`,
+remove `compact`, redownload the previous version, and reload the browser.
+
+**Optional prerelease testing:** in HACS, open **DESLOC Lock Card**, choose
+**Redownload**, enable prerelease versions, and select the preview you want to
+test. Reload the browser after downloading. Prereleases are opt-in; compact mode
+does not require one when using version 0.4.0 or newer.
 
 ## Languages
 
