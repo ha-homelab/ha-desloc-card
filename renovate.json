@@ -15,7 +15,8 @@
     "**/node_modules/**",
     "**/fixtures/**",
     "**/tools/browser-compatibility/**",
-    ".github/cosign/**"
+    ".github/cosign/**",
+    "scripts/requirements-ci.txt"
   ],
   "packageRules": [
     {
