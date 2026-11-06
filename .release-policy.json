@@ -54,5 +54,12 @@
       "release-inputs-card.json"
     ]
   },
-  "toolkit_revision": "5e413f80a4353d328b4529eae57992ac3987e2dd"
+  "toolkit_revision": "5e413f80a4353d328b4529eae57992ac3987e2dd",
+  "change_scope": {
+    "documentation_paths": [],
+    "required_paths": [],
+    "always_validate_workflows": [
+      "codeql.yml"
+    ]
+  }
 }
