@@ -1,5 +1,38 @@
 # Changelog
 
+## [0.4.1] - Unreleased
+
+### Changed
+
+- keep local instruction files out of git.
+- add a navigation index for docs/.
+- preserve merge identity and withdrawn auto-merge requests (#104).
+- verify current default branch before reviewed merges (#100).
+- preserve automerge withdrawal after base advances (#99).
+- reevaluate reviewed dependency merges after CI (#98).
+- classify governance and roadmap changes as documentation (#96).
+- retain HACS documentation checks and release qualification (#95).
+- preserve full release qualification and release-note contracts (#94).
+- skip heavy validation for documentation-only changes (#93).
+
+### Upgrade
+
+Update DESLOC Lock Card through HACS to 0.4.0 and reload the browser.
+Enable **Compact layout** on an existing card, or add **DESLOC Compact Lock Card**.
+No integration update, extra resource, or reauthentication is required. Before
+rolling back to 0.3.x, change compact card types to `custom:desloc-lock-card` and
+remove the `compact` option.
+
+### Security
+
+Update the Happy DOM fuzz-test dependency to 21.0.4 to address its reported
+security advisory. This test tooling is not included in the distributed card.
+
+Both layouts share the existing command handling: explicit unlock confirmation,
+state and target rechecks, pending-command protection, and no automatic retries.
+Changing the layout never sends a lock command. Automated browser checks use
+synthetic entities and do not operate a physical lock.
+
 ## [0.4.0] - 2026-10-25
 
 ### Added
